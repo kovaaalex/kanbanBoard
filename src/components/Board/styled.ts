@@ -4,13 +4,18 @@ export const BoardItem = styled.div`
   flex-direction: column;
   gap: 12px;
 `;
-export const Column = styled.div`
+export const Column = styled.div<{ $status: 'To Do' | 'In Progress' | 'Done' }>`
   display: flex;
   align-items: center;
   color: white;
   gap: 8px;
   position: relative;
-  background-color: #4f46e5;
+  background-color: ${({ $status }) =>
+    $status === 'To Do'
+      ? '#4f46e5'
+      : $status === 'In Progress'
+        ? '#F59E0B'
+        : '#22C55E'};
   border-radius: 100px;
   padding: 8px;
 `;

@@ -1,4 +1,4 @@
-import Task from '../Task/Index';
+import Tasks from '../Tasks/Index';
 import {
   AddTask,
   AddTaskButton,
@@ -8,16 +8,19 @@ import {
   Plus,
   TaskLength,
 } from './styled';
-
-const Board = () => {
+interface BoardProps {
+  title: 'To Do' | 'In Progress' | 'Done';
+  taskCount: number;
+}
+const Board = ({ title, taskCount }: BoardProps) => {
   return (
     <BoardItem>
-      <Column>
-        <TaskLength>4</TaskLength>
-        <H4>To Do</H4>
+      <Column $status={title}>
+        <TaskLength>{taskCount}</TaskLength>
+        <H4>{title}</H4>
         <Plus />
       </Column>
-      <Task />
+      <Tasks title={title} />
       <AddTask>
         <AddTaskButton>Add task...</AddTaskButton>
       </AddTask>

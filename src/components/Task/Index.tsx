@@ -11,7 +11,7 @@ interface TaskProps {
 
 const Task = ({
   taskId = 1,
-  priority = 'Medium',
+  priority = 'Priority',
   title = 'Healthcare app wireframe flow 👩‍⚕️',
   description = 'Lorem ipsum dolor sit amet, libre unst consectetur adispicing elit.',
   onPriorityChange,
