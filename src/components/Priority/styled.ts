@@ -24,6 +24,7 @@ export const PriorityContainer = styled.p<{
           : '#EEF2FF'};
   border-radius: 1234px;
   display: inline-block;
+  cursor: pointer;
 `;
 export const PriorityList = styled.ul<{ $isOpen?: true | false }>`
   position: absolute;
