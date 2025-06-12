@@ -9,6 +9,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { deleteTask } from '../../store/taskSlice';
 import type { TaskStatus } from '../../constants/taskTypes';
+import { useDrag } from 'react-dnd';
 interface TaskProps {
   taskId?: number;
   status: TaskStatus;
@@ -31,6 +32,17 @@ const Task = ({
   const [currentDescription, setDescription] = useState(description);
   const titleRef = useRef<HTMLTextAreaElement>(null);
   const descriptionRef = useRef<HTMLTextAreaElement>(null);
+  const [{ isDragging }, drag] = useDrag(() => ({
+    type: 'TASK',
+    item: { taskId, fromStatus: status },
+    collect: (monitor) => ({
+      isDragging: !!monitor.isDragging(),
+    }),
+  }));
+
+  const setDragRef = (node: HTMLDivElement | null) => {
+    drag(node);
+  };
 
   const autoHeight = (element: HTMLTextAreaElement | null) => {
     if (element) {
@@ -57,7 +69,7 @@ const Task = ({
     autoHeight(descriptionRef.current);
   }, []);
   return (
-    <TaskSection>
+    <TaskSection ref={setDragRef} style={{ opacity: isDragging ? 0.5 : 1 }}>
       <Priority priority={priority} onChange={onPriorityChange} />
       <TaskTitle
         ref={titleRef}

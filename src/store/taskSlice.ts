@@ -47,7 +47,25 @@ const tasksSlice = createSlice({
       );
       localStorage.setItem('tasks', JSON.stringify(state));
     },
+    moveTask: (
+      state,
+      action: PayloadAction<{
+        taskId: number;
+        fromStatus: TaskStatus;
+        toStatus: TaskStatus;
+      }>
+    ) => {
+      const { taskId, fromStatus, toStatus } = action.payload;
+      const taskIndex = state.tasks[fromStatus].findIndex(
+        (item) => item.id === taskId
+      );
+      if (taskIndex !== -1) {
+        const [task] = state.tasks[fromStatus].splice(taskIndex, 1);
+        state.tasks[toStatus].push(task);
+        localStorage.setItem('tasks', JSON.stringify(state));
+      }
+    },
   },
 });
-export const { setTasks, addTask, deleteTask } = tasksSlice.actions;
+export const { setTasks, addTask, deleteTask, moveTask } = tasksSlice.actions;
 export default tasksSlice.reducer;
