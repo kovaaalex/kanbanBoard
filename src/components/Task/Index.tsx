@@ -1,4 +1,9 @@
-import { TaskSection, TaskTitle, TaskDescription } from './styled';
+import {
+  TaskSection,
+  TaskTitle,
+  TaskDescription,
+  DeleteButton,
+} from './styled';
 import Priority from '../Priority/Index';
 import { useEffect, useRef, useState } from 'react';
 interface TaskProps {
@@ -61,6 +66,7 @@ const Task = ({
         onChange={handleDescriptionChange}
         rows={1}
       />
+      <DeleteButton>delete</DeleteButton>
     </TaskSection>
   );
 };

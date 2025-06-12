@@ -18,6 +18,7 @@ export const Column = styled.div<{ $status: 'To Do' | 'In Progress' | 'Done' }>`
         : '#22C55E'};
   border-radius: 100px;
   padding: 8px;
+  min-width: 240px;
 `;
 export const H4 = styled.h4`
   font-weight: 700;

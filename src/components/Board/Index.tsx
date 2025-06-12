@@ -1,3 +1,4 @@
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import Tasks from '../Tasks/Index';
 import {
   AddTask,
@@ -8,21 +9,36 @@ import {
   Plus,
   TaskLength,
 } from './styled';
+import type { TaskStatus } from '../../constants/taskTypes';
+import { addTask } from '../../store/taskSlice';
 interface BoardProps {
-  title: 'To Do' | 'In Progress' | 'Done';
-  taskCount: number;
+  title: TaskStatus;
 }
-const Board = ({ title, taskCount }: BoardProps) => {
+const Board = ({ title }: BoardProps) => {
+  const dispatch = useAppDispatch();
+  const tasks = useAppSelector((state) => state.tasks.tasks[title]);
+  const handleAddTask = () => {
+    dispatch(
+      addTask({
+        status: title,
+        task: {
+          title: 'Новая задача',
+          description: '',
+          priority: 'Medium',
+        },
+      })
+    );
+  };
   return (
     <BoardItem>
       <Column $status={title}>
-        <TaskLength>{taskCount}</TaskLength>
+        <TaskLength>{tasks.length}</TaskLength>
         <H4>{title}</H4>
         <Plus />
       </Column>
       <Tasks title={title} />
       <AddTask>
-        <AddTaskButton>Add task...</AddTaskButton>
+        <AddTaskButton onClick={handleAddTask}>Add task...</AddTaskButton>
       </AddTask>
     </BoardItem>
   );
