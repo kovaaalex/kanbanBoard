@@ -16,6 +16,7 @@ const Tasks = ({ title }: TaskProps) => {
       {tasks.map((task) => (
         <Task
           key={task.id}
+          status={title}
           taskId={task.id}
           priority={task.priority}
           title={task.title}

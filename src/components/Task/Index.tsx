@@ -6,8 +6,12 @@ import {
 } from './styled';
 import Priority from '../Priority/Index';
 import { useEffect, useRef, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { deleteTask } from '../../store/taskSlice';
+import type { TaskStatus } from '../../constants/taskTypes';
 interface TaskProps {
   taskId?: number;
+  status: TaskStatus;
   priority?: 'Low' | 'Medium' | 'High' | 'Priority';
   title?: string;
   description?: string;
@@ -16,11 +20,13 @@ interface TaskProps {
 
 const Task = ({
   taskId = 1,
+  status = 'To Do',
   priority = 'Priority',
   title = 'Healthcare app wireframe flow 👩‍⚕️',
   description = 'Lorem ipsum dolor sit amet, libre unst consectetur adispicing elit.',
   onPriorityChange,
 }: TaskProps) => {
+  const dispatch = useDispatch();
   const [currentTitle, setTitle] = useState(title);
   const [currentDescription, setDescription] = useState(description);
   const titleRef = useRef<HTMLTextAreaElement>(null);
@@ -31,6 +37,9 @@ const Task = ({
       element.style.height = 'auto';
       element.style.height = `${element.scrollHeight}px`;
     }
+  };
+  const handleDelete = () => {
+    dispatch(deleteTask({ status, id: taskId }));
   };
   const handleTitleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setTitle(e.target.value);
@@ -66,7 +75,7 @@ const Task = ({
         onChange={handleDescriptionChange}
         rows={1}
       />
-      <DeleteButton>delete</DeleteButton>
+      <DeleteButton onClick={handleDelete}>delete</DeleteButton>
     </TaskSection>
   );
 };
