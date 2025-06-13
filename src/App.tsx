@@ -1,16 +1,14 @@
-// import { useState } from 'react'
-// import reactLogo from './assets/react.svg'
-// import viteLogo from '/vite.svg'
-import './App.css';
-// import Board from './components/Board/Index';
-import KanbanBoard from './components/KanbanBoard/Index';
+import { useState } from 'react'
+import reactLogo from './assets/react.svg'
+import viteLogo from '/vite.svg'
+import './App.css'
 
 function App() {
-  // const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0)
 
   return (
-    <KanbanBoard>
-      {/* <div>
+    <>
+      <div>
         <a href="https://vite.dev" target="_blank">
           <img src={viteLogo} className="logo" alt="Vite logo" />
         </a>
@@ -29,9 +27,9 @@ function App() {
       </div>
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
-      </p> */}
-    </KanbanBoard>
-  );
+      </p>
+    </>
+  )
 }
 
-export default App;
+export default App
