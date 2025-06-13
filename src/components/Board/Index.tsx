@@ -55,7 +55,9 @@ const Board = ({ title }: BoardProps) => {
         </Column>
         <Tasks title={title} />
         <AddTask>
-          <AddTaskButton onClick={handleAddTask}>Add task...</AddTaskButton>
+          <AddTaskButton onClick={handleAddTask} $status={title}>
+            Add task...
+          </AddTaskButton>
         </AddTask>
       </BoardItem>
     </DroppableBoard>

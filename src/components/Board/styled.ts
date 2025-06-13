@@ -70,11 +70,27 @@ export const AddTask = styled.div`
   border: 1px solid #e2e8f0;
   box-shadow: 0px 2px 4px -2px rgba(23, 23, 23, 0.06);
 `;
-export const AddTaskButton = styled.button`
+export const AddTaskButton = styled.button<{
+  $status: 'To Do' | 'In Progress' | 'Done';
+}>`
   font-size: 12px;
   line-height: 16px;
-  background-color: #eef2ff;
-  color: #4f46e5;
+  background-color: ${({ $status }) =>
+    $status === 'To Do'
+      ? '#EEF2FF'
+      : $status === 'In Progress'
+        ? '#FFFBEB'
+        : $status === 'Done'
+          ? '#F0FDF4'
+          : '#FEE2E2'};
+  color: ${({ $status }) =>
+    $status === 'To Do'
+      ? '#4F46E5'
+      : $status === 'In Progress'
+        ? '#F59E0B'
+        : $status === 'Done'
+          ? '#22C55E'
+          : '#DC2626'};
   padding: 4px 8px;
   border: none;
 `;

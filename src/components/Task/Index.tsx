@@ -3,11 +3,12 @@ import {
   TaskTitle,
   TaskDescription,
   DeleteButton,
+  SaveButton,
 } from './styled';
 import Priority from '../Priority/Index';
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { deleteTask } from '../../store/taskSlice';
+import { deleteTask, updateTask } from '../../store/taskSlice';
 import type { TaskStatus } from '../../constants/taskTypes';
 import { useDrag } from 'react-dnd';
 interface TaskProps {
@@ -30,6 +31,8 @@ const Task = ({
   const dispatch = useDispatch();
   const [currentTitle, setTitle] = useState(title);
   const [currentDescription, setDescription] = useState(description);
+  const [showSave, setShowSave] = useState(false);
+  const [currentPriority, setCurrentPriority] = useState(priority);
   const titleRef = useRef<HTMLTextAreaElement>(null);
   const descriptionRef = useRef<HTMLTextAreaElement>(null);
   const [{ isDragging }, drag] = useDrag(() => ({
@@ -56,13 +59,38 @@ const Task = ({
   const handleTitleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setTitle(e.target.value);
     autoHeight(e.target);
+    setShowSave(true);
+  };
+  const handlePriorityChange = (
+    newPriority: 'Low' | 'Medium' | 'High' | 'Priority'
+  ) => {
+    setCurrentPriority(newPriority);
+    setShowSave(true);
+    if (onPriorityChange) {
+      onPriorityChange(newPriority);
+    }
   };
 
+  const handleSave = () => {
+    dispatch(
+      updateTask({
+        status,
+        id: taskId,
+        updates: {
+          title: currentTitle,
+          description: currentDescription,
+          priority: currentPriority,
+        },
+      })
+    );
+    setShowSave(false);
+  };
   const handleDescriptionChange = (
     e: React.ChangeEvent<HTMLTextAreaElement>
   ) => {
     setDescription(e.target.value);
     autoHeight(e.target);
+    setShowSave(true);
   };
   useEffect(() => {
     autoHeight(titleRef.current);
@@ -70,7 +98,7 @@ const Task = ({
   }, []);
   return (
     <TaskSection ref={setDragRef} style={{ opacity: isDragging ? 0.5 : 1 }}>
-      <Priority priority={priority} onChange={onPriorityChange} />
+      <Priority priority={priority} onChange={handlePriorityChange} />
       <TaskTitle
         ref={titleRef}
         id={`${taskId}-title`}
@@ -88,6 +116,7 @@ const Task = ({
         rows={1}
       />
       <DeleteButton onClick={handleDelete}>delete</DeleteButton>
+      {showSave && <SaveButton onClick={handleSave}>Save</SaveButton>}
     </TaskSection>
   );
 };

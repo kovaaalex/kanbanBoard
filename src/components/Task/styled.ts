@@ -41,3 +41,9 @@ export const DeleteButton = styled.button`
   top: 10px;
   right: 10px;
 `;
+export const SaveButton = styled.button`
+  border: none;
+  background: none;
+  padding: 0;
+  color: #475569;
+`;
