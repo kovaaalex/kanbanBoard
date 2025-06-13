@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 export const TaskSection = styled.section`
+  position: relative;
   padding: 12px;
   border-radius: 24px;
   border: 1px solid #e2e8f0;
@@ -33,4 +34,16 @@ export const TaskDescription = styled.textarea`
   resize: none;
   overflow-y: hidden;
   min-height: 22px;
+`;
+export const DeleteButton = styled.button`
+  padding: 0;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+`;
+export const SaveButton = styled.button`
+  border: none;
+  background: none;
+  padding: 0;
+  color: #475569;
 `;
