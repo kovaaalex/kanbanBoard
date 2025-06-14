@@ -10,14 +10,26 @@ import {
   TaskLength,
 } from './styled';
 import type { TaskStatus } from '../../constants/taskTypes';
-import { addTask, moveTask } from '../../store/taskSlice';
-import { DroppableBoard } from '../DropableBoard/DropableBoard';
+import { addTask, moveTask, initializeBoardTasks } from '../../store/taskSlice';
+import { DroppableBoard } from '../DroppableBoard/Index';
+import { useEffect } from 'react';
+
 interface BoardProps {
   title: TaskStatus;
 }
+
 const Board = ({ title }: BoardProps) => {
   const dispatch = useAppDispatch();
-  const tasks = useAppSelector((state) => state.tasks.tasks[title]);
+
+  const { tasks, activeBoards } = useAppSelector((state) => ({
+    tasks: state.tasks.tasks[title] || [],
+    activeBoards: state.boards.activeBoards,
+  }));
+  useEffect(() => {
+    if (activeBoards.includes(title) && !tasks.length) {
+      dispatch(initializeBoardTasks(title));
+    }
+  }, [title, activeBoards, dispatch]);
 
   const handleDrop = (
     item: { taskId: number; fromStatus: TaskStatus },
@@ -33,6 +45,7 @@ const Board = ({ title }: BoardProps) => {
       );
     }
   };
+
   const handleAddTask = () => {
     dispatch(
       addTask({
@@ -45,22 +58,24 @@ const Board = ({ title }: BoardProps) => {
       })
     );
   };
+
   return (
-    <DroppableBoard status={title} onDrop={(item) => handleDrop(item, title)}>
-      <BoardItem>
+    <BoardItem>
+      <DroppableBoard status={title} onDrop={(item) => handleDrop(item, title)}>
         <Column $status={title}>
           <TaskLength>{tasks.length}</TaskLength>
           <H4>{title}</H4>
-          <Plus />
+          <Plus onClick={handleAddTask} />
         </Column>
-        <Tasks title={title} />
+        <Tasks title={title} tasks={tasks} />
         <AddTask>
           <AddTaskButton onClick={handleAddTask} $status={title}>
             Add task...
           </AddTaskButton>
         </AddTask>
-      </BoardItem>
-    </DroppableBoard>
+      </DroppableBoard>
+    </BoardItem>
   );
 };
+
 export default Board;

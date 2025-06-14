@@ -83,8 +83,20 @@ const tasksSlice = createSlice({
       }
       localStorage.setItem('tasks', JSON.stringify(state));
     },
+    initializeBoardTasks: (state, action: PayloadAction<string>) => {
+      const boardName = action.payload;
+      if (!state.tasks[boardName]) {
+        state.tasks[boardName] = [];
+      }
+    },
   },
 });
-export const { setTasks, addTask, deleteTask, moveTask, updateTask } =
-  tasksSlice.actions;
+export const {
+  setTasks,
+  addTask,
+  deleteTask,
+  moveTask,
+  updateTask,
+  initializeBoardTasks,
+} = tasksSlice.actions;
 export default tasksSlice.reducer;

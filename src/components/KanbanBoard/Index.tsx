@@ -1,10 +1,14 @@
+import { useSelector } from 'react-redux';
 import Board from '../Board/Index';
 import { KanbanContainer } from './styled';
+import type { RootState } from '../../store/store';
 const KanbanBoard = () => {
-  type TaskState = 'To Do' | 'In Progress' | 'Done';
+  const activeBoards = useSelector(
+    (state: RootState) => state.boards.activeBoards
+  );
   return (
     <KanbanContainer>
-      {(['To Do', 'In Progress', 'Done'] as TaskState[]).map((state) => (
+      {activeBoards.map((state) => (
         <Board key={state} title={state} />
       ))}
     </KanbanContainer>
