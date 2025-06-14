@@ -1,6 +1,7 @@
 import { useDrop } from 'react-dnd';
 import type { TaskStatus } from '../../constants/taskTypes';
 import { forwardRef } from 'react';
+import { DroppableBoardComponent } from './styled';
 
 interface DroppableBoardProps {
   status: TaskStatus;
@@ -25,9 +26,7 @@ export const DroppableBoard = forwardRef<HTMLDivElement, DroppableBoardProps>(
       }
     };
     return (
-      <div ref={setRef} style={{ height: '100%', width: '100%' }}>
-        {children}
-      </div>
+      <DroppableBoardComponent ref={setRef}>{children}</DroppableBoardComponent>
     );
   }
 );

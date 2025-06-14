@@ -1,9 +1,11 @@
+import type { TaskItem } from '../../constants/taskTypes';
 import { useAppSelector } from '../../store/hooks';
 import Task from '../Task/Index';
 import { TasksList } from './styled';
 
 interface TaskProps {
-  title: 'To Do' | 'In Progress' | 'Done';
+  title: 'To Do' | 'In Progress' | 'Done' | string;
+  tasks: TaskItem[];
 }
 
 const Tasks = ({ title }: TaskProps) => {

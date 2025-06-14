@@ -1,8 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit';
 import tasksReducer from './taskSlice';
-import type { TasksState } from '../constants/taskTypes';
+import boardsReducer from './boardsSlice';
+import type { TasksState, BoardsState } from '../constants/taskTypes';
 
-const initialState: TasksState = {
+const defaultTasksState: TasksState = {
   tasks: {
     'To Do': [],
     'In Progress': [],
@@ -10,30 +11,61 @@ const initialState: TasksState = {
   },
   lastId: 0,
 };
-const loadFromLocalStorage = (): TasksState => {
+
+const defaultBoardsState: BoardsState = {
+  defaultBoards: ['To Do', 'In Progress', 'Done'],
+  customBoards: [],
+  activeBoards: ['To Do', 'In Progress', 'Done'],
+};
+
+const loadState = () => {
   try {
-    const storedTasks = localStorage.getItem('tasks');
-    if (storedTasks) {
-      const parsed = JSON.parse(storedTasks) as TasksState;
-      return {
-        tasks: parsed.tasks || initialState.tasks,
-        lastId: parsed.lastId || initialState.lastId,
-      };
-    }
-    return initialState;
+    const tasksStr = localStorage.getItem('tasks');
+    const boardsStr = localStorage.getItem('boards');
+    const tasks: TasksState = tasksStr
+      ? JSON.parse(tasksStr)
+      : defaultTasksState;
+    const boards: BoardsState = boardsStr
+      ? JSON.parse(boardsStr)
+      : defaultBoardsState;
+    return {
+      tasks: {
+        tasks: tasks.tasks || defaultTasksState.tasks,
+        lastId: tasks.lastId || 0,
+      },
+      boards: {
+        defaultBoards: boards.defaultBoards || defaultBoardsState.defaultBoards,
+        customBoards: boards.customBoards || [],
+        activeBoards: boards.activeBoards || [
+          ...defaultBoardsState.defaultBoards,
+          ...(boards.customBoards || []),
+        ],
+      },
+    };
   } catch (e) {
-    console.error('Failed to load tasks from localStorage', e);
-    return initialState;
+    console.error('Load state error:', e);
+    return {
+      tasks: defaultTasksState,
+      boards: defaultBoardsState,
+    };
   }
 };
+
 const store = configureStore({
   reducer: {
     tasks: tasksReducer,
+    boards: boardsReducer,
   },
-  preloadedState: {
-    tasks: loadFromLocalStorage(),
-  },
+  preloadedState: loadState(),
 });
+
+store.subscribe(() => {
+  const state = store.getState();
+  localStorage.setItem('tasks', JSON.stringify(state.tasks));
+  localStorage.setItem('boards', JSON.stringify(state.boards));
+  console.log('State saved:', state); // Для отладки
+});
+
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
 

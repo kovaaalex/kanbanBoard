@@ -3,8 +3,12 @@ export const BoardItem = styled.div`
   display: flex;
   flex-direction: column;
   gap: 12px;
+  min-width: 240px;
+  max-width: 300px;
 `;
-export const Column = styled.div<{ $status: 'To Do' | 'In Progress' | 'Done' }>`
+export const Column = styled.div<{
+  $status: 'To Do' | 'In Progress' | 'Done' | string;
+}>`
   display: flex;
   align-items: center;
   color: white;
@@ -15,10 +19,11 @@ export const Column = styled.div<{ $status: 'To Do' | 'In Progress' | 'Done' }>`
       ? '#4f46e5'
       : $status === 'In Progress'
         ? '#F59E0B'
-        : '#22C55E'};
+        : $status === 'Done'
+          ? '#22C55E'
+          : '#DC2626'};
   border-radius: 100px;
   padding: 8px;
-  min-width: 240px;
 `;
 export const H4 = styled.h4`
   font-weight: 700;
@@ -71,7 +76,7 @@ export const AddTask = styled.div`
   box-shadow: 0px 2px 4px -2px rgba(23, 23, 23, 0.06);
 `;
 export const AddTaskButton = styled.button<{
-  $status: 'To Do' | 'In Progress' | 'Done';
+  $status: 'To Do' | 'In Progress' | 'Done' | string;
 }>`
   font-size: 12px;
   line-height: 16px;
