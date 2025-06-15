@@ -6,6 +6,7 @@ export const TaskSection = styled.section`
   border-radius: 24px;
   border: 1px solid #e2e8f0;
   max-width: 300px;
+  background-color: #fff;
 `;
 
 export const TaskTitle = styled.textarea`
@@ -45,5 +46,6 @@ export const SaveButton = styled.button`
   border: none;
   background: none;
   padding: 0;
+  margin-top: 16px;
   color: #475569;
 `;
