@@ -11,7 +11,7 @@ const Header = () => {
   return (
     <HeaderComponent>
       <H2>Kanban Dashboard</H2>
-      <AddBoardButton onClick={handleAddBoard}>+</AddBoardButton>
+      <AddBoardButton onClick={handleAddBoard}></AddBoardButton>
     </HeaderComponent>
   );
 };

@@ -11,6 +11,7 @@ import { useDispatch } from 'react-redux';
 import { deleteTask, updateTask } from '../../store/taskSlice';
 import type { TaskStatus } from '../../constants/taskTypes';
 import { useDrag } from 'react-dnd';
+import { FaTrashAlt } from 'react-icons/fa';
 interface TaskProps {
   taskId?: number;
   status: TaskStatus;
@@ -115,7 +116,9 @@ const Task = ({
         onChange={handleDescriptionChange}
         rows={1}
       />
-      <DeleteButton onClick={handleDelete}>delete</DeleteButton>
+      <DeleteButton onClick={handleDelete}>
+        <FaTrashAlt />
+      </DeleteButton>
       {showSave && <SaveButton onClick={handleSave}>Save</SaveButton>}
     </TaskSection>
   );

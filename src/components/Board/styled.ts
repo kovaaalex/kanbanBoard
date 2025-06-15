@@ -5,6 +5,7 @@ export const BoardItem = styled.div`
   gap: 12px;
   min-width: 240px;
   max-width: 300px;
+  height: auto;
 `;
 export const Column = styled.div<{
   $status: 'To Do' | 'In Progress' | 'Done' | string;
@@ -34,12 +35,12 @@ export const Plus = styled.span`
   position: absolute;
   top: 50%;
   right: 8px;
-  transform: translateY(-50%); /* Добавил для точного центрирования */
+  transform: translateY(-50%);
   display: inline-block;
   width: 20px;
   height: 20px;
   color: white;
-
+  cursor: pointer;
   &::before,
   &::after {
     content: '';
@@ -49,23 +50,30 @@ export const Plus = styled.span`
     left: 50%;
     transform: translate(-50%, -50%);
   }
-
   &::before {
-    width: 18px; /* Уменьшил для лучшего вида */
+    width: 18px;
     height: 2px;
   }
-
   &::after {
     width: 2px;
-    height: 18px; /* Уменьшил для лучшего вида */
+    height: 18px;
   }
 `;
-export const TaskLength = styled.span`
+export const TaskLength = styled.span<{
+  $status: 'To Do' | 'In Progress' | 'Done' | string;
+}>`
   display: inline-block;
   padding: 6px 12px;
   border-radius: 50%;
   background-color: white;
-  color: #4f46e5;
+  color: ${({ $status }) =>
+    $status === 'To Do'
+      ? '#4F46E5'
+      : $status === 'In Progress'
+        ? '#F59E0B'
+        : $status === 'Done'
+          ? '#22C55E'
+          : '#DC2626'};
   font-size: 14px;
   line-height: 20px;
 `;
