@@ -21,15 +21,13 @@ interface BoardProps {
 const Board = ({ title }: BoardProps) => {
   const dispatch = useAppDispatch();
 
-  const { tasks, activeBoards } = useAppSelector((state) => ({
+  const { tasks } = useAppSelector((state) => ({
     tasks: state.tasks.tasks[title] || [],
-    activeBoards: state.boards.activeBoards,
+    boards: state.boards.boards,
   }));
   useEffect(() => {
-    if (activeBoards.includes(title) && !tasks.length) {
-      dispatch(initializeBoardTasks(title));
-    }
-  }, [title, activeBoards, dispatch]);
+    dispatch(initializeBoardTasks(title));
+  }, [title, dispatch]);
 
   const handleDrop = (
     item: { taskId: number; fromStatus: TaskStatus },
@@ -45,7 +43,7 @@ const Board = ({ title }: BoardProps) => {
       );
     }
   };
-
+  const handleBoardChange = () => {};
   const handleAddTask = () => {
     dispatch(
       addTask({
@@ -64,7 +62,7 @@ const Board = ({ title }: BoardProps) => {
       <DroppableBoard status={title} onDrop={(item) => handleDrop(item, title)}>
         <Column $status={title}>
           <TaskLength $status={title}>{tasks.length}</TaskLength>
-          <H4 value={title} maxLength={50} />
+          <H4 value={title} maxLength={50} onChange={handleBoardChange} />
           <Plus onClick={handleAddTask} />
         </Column>
         <Tasks title={title} tasks={tasks} />

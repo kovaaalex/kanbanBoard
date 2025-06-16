@@ -4,7 +4,7 @@ import boardsReducer from './boardsSlice';
 import type { TasksState } from '../constants/taskTypes';
 import type { BoardsState } from '../constants/boardTypes';
 import { initialTasksState } from '../constants/taskTypes';
-import { defaultBoardsState } from '../constants/boardTypes';
+import { initialBoardState } from '../constants/boardTypes';
 
 const loadState = () => {
   const tasksStr = localStorage.getItem('tasks');
@@ -12,19 +12,15 @@ const loadState = () => {
   const tasks: TasksState = tasksStr ? JSON.parse(tasksStr) : initialTasksState;
   const boards: BoardsState = boardsStr
     ? JSON.parse(boardsStr)
-    : defaultBoardsState;
+    : initialBoardState;
   return {
     tasks: {
       tasks: tasks.tasks || initialTasksState.tasks,
       lastId: tasks.lastId ?? 0,
     },
     boards: {
-      defaultBoards: boards.defaultBoards ?? defaultBoardsState.defaultBoards,
-      customBoards: boards.customBoards ?? [],
-      activeBoards: boards.activeBoards ?? [
-        ...defaultBoardsState.defaultBoards,
-        ...(boards.customBoards ?? []),
-      ],
+      boards: boards.boards || initialBoardState.boards,
+      lastId: boards.lastId ?? 3,
     },
   };
 };

@@ -3,13 +3,11 @@ import Board from '../Board/Index';
 import { KanbanContainer } from './styled';
 import type { RootState } from '../../store/store';
 const KanbanBoard = () => {
-  const activeBoards = useSelector(
-    (state: RootState) => state.boards.activeBoards
-  );
+  const activeBoards = useSelector((state: RootState) => state.boards.boards);
   return (
     <KanbanContainer>
       {activeBoards.map((state) => (
-        <Board key={state} title={state} />
+        <Board key={state.id} title={state.name} />
       ))}
     </KanbanContainer>
   );
