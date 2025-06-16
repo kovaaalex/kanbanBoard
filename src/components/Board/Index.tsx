@@ -64,7 +64,7 @@ const Board = ({ title }: BoardProps) => {
       <DroppableBoard status={title} onDrop={(item) => handleDrop(item, title)}>
         <Column $status={title}>
           <TaskLength $status={title}>{tasks.length}</TaskLength>
-          <H4>{title}</H4>
+          <H4 value={title} maxLength={50} />
           <Plus onClick={handleAddTask} />
         </Column>
         <Tasks title={title} tasks={tasks} />

@@ -16,14 +16,7 @@ const Tasks = ({ title }: TaskProps) => {
   return (
     <TasksList>
       {tasks.map((task) => (
-        <Task
-          key={task.id}
-          status={title}
-          taskId={task.id}
-          priority={task.priority}
-          title={task.title}
-          description={task.description}
-        />
+        <Task key={task.id} task={task} status={title} />
       ))}
     </TasksList>
   );

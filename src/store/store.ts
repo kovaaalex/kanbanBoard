@@ -4,12 +4,7 @@ import boardsReducer from './boardsSlice';
 import type { TasksState } from '../constants/taskTypes';
 import type { BoardsState } from '../constants/boardTypes';
 import { initialTasksState } from '../constants/taskTypes';
-
-const defaultBoardsState: BoardsState = {
-  defaultBoards: ['To Do', 'In Progress', 'Done'],
-  customBoards: [],
-  activeBoards: ['To Do', 'In Progress', 'Done'],
-};
+import { defaultBoardsState } from '../constants/boardTypes';
 
 const loadState = () => {
   const tasksStr = localStorage.getItem('tasks');

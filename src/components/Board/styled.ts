@@ -26,7 +26,12 @@ export const Column = styled.div<{
   border-radius: 100px;
   padding: 8px;
 `;
-export const H4 = styled.h4`
+export const H4 = styled.input`
+  width: 150px;
+  background: none;
+  border: none;
+  outline: none;
+  color: white;
   font-weight: 700;
   font-size: 16px;
   line-height: 22px;

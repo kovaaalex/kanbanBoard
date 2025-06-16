@@ -9,26 +9,17 @@ import Priority from '../Priority/Index';
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { deleteTask, updateTask } from '../../store/taskSlice';
-import type { TaskStatus } from '../../constants/taskTypes';
+import type { TaskItem, TaskStatus } from '../../constants/taskTypes';
 import { useDrag } from 'react-dnd';
 import { FaTrashAlt } from 'react-icons/fa';
 interface TaskProps {
-  taskId?: number;
+  task: TaskItem;
   status: TaskStatus;
-  priority?: 'Low' | 'Medium' | 'High' | 'Priority';
-  title?: string;
-  description?: string;
   onPriorityChange?: (priority: 'Low' | 'Medium' | 'High' | 'Priority') => void;
 }
 
-const Task = ({
-  taskId = 1,
-  status = 'To Do',
-  priority = 'Priority',
-  title = 'Healthcare app wireframe flow 👩‍⚕️',
-  description = 'Lorem ipsum dolor sit amet, libre unst consectetur adispicing elit.',
-  onPriorityChange,
-}: TaskProps) => {
+const Task = ({ task, status, onPriorityChange }: TaskProps) => {
+  const { id, title, description, priority } = task;
   const dispatch = useDispatch();
   const [currentTitle, setTitle] = useState(title);
   const [currentDescription, setDescription] = useState(description);
@@ -38,7 +29,7 @@ const Task = ({
   const descriptionRef = useRef<HTMLTextAreaElement>(null);
   const [{ isDragging }, drag] = useDrag(() => ({
     type: 'TASK',
-    item: { taskId, fromStatus: status },
+    item: { taskId: id, fromStatus: status },
     collect: (monitor) => ({
       isDragging: !!monitor.isDragging(),
     }),
@@ -55,7 +46,7 @@ const Task = ({
     }
   };
   const handleDelete = () => {
-    dispatch(deleteTask({ status, id: taskId }));
+    dispatch(deleteTask({ status, id }));
   };
   const handleTitleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setTitle(e.target.value);
@@ -76,7 +67,7 @@ const Task = ({
     dispatch(
       updateTask({
         status,
-        id: taskId,
+        id,
         updates: {
           title: currentTitle,
           description: currentDescription,
@@ -102,7 +93,7 @@ const Task = ({
       <Priority priority={priority} onChange={handlePriorityChange} />
       <TaskTitle
         ref={titleRef}
-        id={`${taskId}-title`}
+        id={`${id}-title`}
         value={currentTitle}
         maxLength={60}
         onChange={handleTitleChange}
@@ -110,7 +101,7 @@ const Task = ({
       />
       <TaskDescription
         ref={descriptionRef}
-        id={`${taskId}-description`}
+        id={`${id}-description`}
         value={currentDescription}
         maxLength={300}
         onChange={handleDescriptionChange}
