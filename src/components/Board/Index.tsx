@@ -51,9 +51,9 @@ const Board = ({ title }: BoardProps) => {
       addTask({
         status: title,
         task: {
-          title: 'Новая задача',
+          title: 'New Task',
           description: '',
-          priority: 'Medium',
+          priority: 'Priority',
         },
       })
     );

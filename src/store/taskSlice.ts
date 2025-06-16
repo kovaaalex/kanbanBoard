@@ -1,16 +1,10 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import type { TaskItem, TaskStatus, TasksState } from '../constants/taskTypes';
-const initialState: TasksState = {
-  tasks: {
-    'To Do': [],
-    'In Progress': [],
-    Done: [],
-  },
-  lastId: 0,
-};
+import { initialTasksState } from '../constants/taskTypes';
+
 const tasksSlice = createSlice({
   name: 'tasks',
-  initialState,
+  initialState: initialTasksState,
   reducers: {
     setTasks: (state, action: PayloadAction<TasksState>) => {
       state.tasks = action.payload.tasks;
