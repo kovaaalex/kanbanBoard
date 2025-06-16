@@ -1,15 +1,9 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
-import type { BoardsState } from '../constants/taskTypes';
-
-const initialState: BoardsState = {
-  defaultBoards: ['To Do', 'In Progress', 'Done'],
-  customBoards: [],
-  activeBoards: ['To Do', 'In Progress', 'Done'],
-};
+import { defaultBoardsState } from '../constants/boardTypes';
 
 export const boardsSlice = createSlice({
   name: 'boards',
-  initialState,
+  initialState: defaultBoardsState,
   reducers: {
     addCustomBoard: (state, action: PayloadAction<string>) => {
       const newBoard = action.payload;

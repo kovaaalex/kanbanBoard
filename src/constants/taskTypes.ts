@@ -9,6 +9,14 @@ export interface TasksState {
   tasks: Record<TaskStatus, TaskItem[]>;
   lastId: number;
 }
+export const initialTasksState: TasksState = {
+  tasks: {
+    'To Do': [],
+    'In Progress': [],
+    Done: [],
+  },
+  lastId: 0,
+};
 export interface BoardsState {
   defaultBoards: string[];
   customBoards: string[];

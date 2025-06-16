@@ -28,6 +28,7 @@ export const PriorityContainer = styled.p<{
 `;
 export const PriorityList = styled.ul<{ $isOpen?: true | false }>`
   position: absolute;
+  z-index: 2;
   top: 24px;
   background-color: white;
   list-style-type: none;
