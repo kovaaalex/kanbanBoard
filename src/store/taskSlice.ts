@@ -9,7 +9,6 @@ const tasksSlice = createSlice({
     setTasks: (state, action: PayloadAction<TasksState>) => {
       state.tasks = action.payload.tasks;
       state.lastId = action.payload.lastId;
-      localStorage.setItem('tasks', JSON.stringify(state));
     },
     addTask: (
       state,
@@ -26,7 +25,6 @@ const tasksSlice = createSlice({
       };
       state.tasks[status].push(newTask);
       state.lastId = newId;
-      localStorage.setItem('tasks', JSON.stringify(state));
     },
     deleteTask: (
       state,
@@ -39,7 +37,6 @@ const tasksSlice = createSlice({
       state.tasks[status] = state.tasks[status].filter(
         (task) => task.id !== id
       );
-      localStorage.setItem('tasks', JSON.stringify(state));
     },
     moveTask: (
       state,
@@ -56,7 +53,7 @@ const tasksSlice = createSlice({
       if (taskIndex !== -1) {
         const [task] = state.tasks[fromStatus].splice(taskIndex, 1);
         state.tasks[toStatus].push(task);
-        localStorage.setItem('tasks', JSON.stringify(state));
+        // localStorage.setItem('tasks', JSON.stringify(state));
       }
     },
     updateTask: (
@@ -75,7 +72,7 @@ const tasksSlice = createSlice({
           ...updates,
         };
       }
-      localStorage.setItem('tasks', JSON.stringify(state));
+      // localStorage.setItem('tasks', JSON.stringify(state));
     },
     initializeBoardTasks: (state, action: PayloadAction<string>) => {
       const boardName = action.payload;

@@ -3,19 +3,19 @@ import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
 import './index.css';
 import App from './App.tsx';
-import store from './store/store.ts';
-import { TasksProvider } from './components/TasksProvider/TasksProvider.tsx';
+import store, { persistor } from './store/store.ts';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
+import { PersistGate } from 'redux-persist/integration/react';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <Provider store={store}>
-      <DndProvider backend={HTML5Backend}>
-        <TasksProvider>
+      <PersistGate loading={null} persistor={persistor}>
+        <DndProvider backend={HTML5Backend}>
           <App />
-        </TasksProvider>
-      </DndProvider>
+        </DndProvider>
+      </PersistGate>
     </Provider>
   </StrictMode>
 );

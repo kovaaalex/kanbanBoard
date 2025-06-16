@@ -1,45 +1,29 @@
 import { configureStore } from '@reduxjs/toolkit';
 import tasksReducer from './taskSlice';
 import boardsReducer from './boardsSlice';
-import type { TasksState } from '../constants/taskTypes';
-import type { BoardsState } from '../constants/boardTypes';
-import { initialTasksState } from '../constants/taskTypes';
-import { initialBoardState } from '../constants/boardTypes';
+import storage from 'redux-persist/es/storage';
+import { persistReducer, persistStore } from 'redux-persist';
+import { combineReducers } from 'redux';
 
-const loadState = () => {
-  const tasksStr = localStorage.getItem('tasks');
-  const boardsStr = localStorage.getItem('boards');
-  const tasks: TasksState = tasksStr ? JSON.parse(tasksStr) : initialTasksState;
-  const boards: BoardsState = boardsStr
-    ? JSON.parse(boardsStr)
-    : initialBoardState;
-  return {
-    tasks: {
-      tasks: tasks.tasks || initialTasksState.tasks,
-      lastId: tasks.lastId ?? 0,
-    },
-    boards: {
-      boards: boards.boards || initialBoardState.boards,
-      lastId: boards.lastId ?? 3,
-    },
-  };
+const rootReducer = combineReducers({
+  boards: boardsReducer,
+  tasks: tasksReducer,
+});
+
+const persistConfig = {
+  key: 'root',
+  storage,
+  whitelist: ['boards', 'tasks'],
 };
 
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+
 const store = configureStore({
-  reducer: {
-    tasks: tasksReducer,
-    boards: boardsReducer,
-  },
-  preloadedState: loadState(),
+  reducer: persistedReducer,
 });
 
-store.subscribe(() => {
-  const state = store.getState();
-  localStorage.setItem('tasks', JSON.stringify(state.tasks));
-  localStorage.setItem('boards', JSON.stringify(state.boards));
-});
-
-export type RootState = ReturnType<typeof store.getState>;
+export const persistor = persistStore(store);
+export type RootState = ReturnType<typeof rootReducer>;
 export type AppDispatch = typeof store.dispatch;
 
 export default store;
