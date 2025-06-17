@@ -10,7 +10,6 @@ import { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { deleteTask, updateTask } from '@/store/taskSlice';
 import type { TaskItem, TaskStatus } from '@/constants/taskTypes';
-import { useDrag } from 'react-dnd';
 import { FaTrashAlt } from 'react-icons/fa';
 interface TaskProps {
   task: TaskItem;
@@ -27,18 +26,14 @@ const Task = ({ task, status, onPriorityChange }: TaskProps) => {
   const [currentPriority, setCurrentPriority] = useState(priority);
   const titleRef = useRef<HTMLTextAreaElement>(null);
   const descriptionRef = useRef<HTMLTextAreaElement>(null);
-  const [{ isDragging }, drag] = useDrag(() => ({
-    type: 'TASK',
-    item: { taskId: id, fromStatus: status },
-    collect: (monitor) => ({
-      isDragging: !!monitor.isDragging(),
-    }),
-  }));
 
-  const setDragRef = (node: HTMLDivElement | null) => {
-    drag(node);
+  const handleDragStart = (e: React.DragEvent) => {
+    e.dataTransfer.setData(
+      'application/json',
+      JSON.stringify({ taskId: id, fromStatus: status })
+    );
+    e.dataTransfer.effectAllowed = 'move';
   };
-
   const autoHeight = (element: HTMLTextAreaElement | null) => {
     if (element) {
       element.style.height = 'auto';
@@ -89,7 +84,7 @@ const Task = ({ task, status, onPriorityChange }: TaskProps) => {
     autoHeight(descriptionRef.current);
   }, []);
   return (
-    <TaskSection ref={setDragRef} style={{ opacity: isDragging ? 0.5 : 1 }}>
+    <TaskSection draggable onDragStart={handleDragStart}>
       <Priority priority={priority} onChange={handlePriorityChange} />
       <TaskTitle
         ref={titleRef}

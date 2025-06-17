@@ -7,6 +7,7 @@ export const TaskSection = styled.section`
   border: 1px solid #e2e8f0;
   max-width: 300px;
   background-color: #fff;
+  cursor: grab;
 `;
 
 export const TaskTitle = styled.textarea`
