@@ -20,8 +20,20 @@ export const boardsSlice = createSlice({
         state.lastId += 1;
       }
     },
+    renameBoard: (
+      state,
+      action: PayloadAction<{ oldName: string; newName: string }>
+    ) => {
+      const { oldName, newName } = action.payload;
+      const boardIndex = state.boards.findIndex(
+        (board) => board.name === oldName
+      );
+      if (boardIndex !== -1) {
+        state.boards[boardIndex].name = newName;
+      }
+    },
   },
 });
 
-export const { addCustomBoard } = boardsSlice.actions;
+export const { addCustomBoard, renameBoard } = boardsSlice.actions;
 export default boardsSlice.reducer;

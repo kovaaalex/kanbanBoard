@@ -112,3 +112,12 @@ export const AddTaskButton = styled.button<{
   padding: 4px 8px;
   border: none;
 `;
+export const SaveButton = styled.button`
+  position: absolute;
+  top: 12px;
+  right: 8px;
+  border: none;
+  background: none;
+  padding: 0;
+  color: white;
+`;
