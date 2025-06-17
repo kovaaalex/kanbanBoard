@@ -1,15 +1,23 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
-import { defaultBoardsState } from '../constants/boardTypes';
+import { initialBoardState } from '@/constants/boardTypes';
 
 export const boardsSlice = createSlice({
   name: 'boards',
-  initialState: defaultBoardsState,
+  initialState: initialBoardState,
   reducers: {
     addCustomBoard: (state, action: PayloadAction<string>) => {
-      const newBoard = action.payload;
-      if (!state.customBoards.includes(newBoard)) {
-        state.customBoards.push(newBoard);
-        state.activeBoards.push(newBoard);
+      const newBoardName = action.payload;
+      const isNameExists = state.boards.some(
+        (board) => board.name.toLowerCase() === newBoardName.toLowerCase()
+      );
+
+      if (!isNameExists) {
+        const newId = (state.lastId + 1).toString();
+        state.boards.push({
+          id: newId,
+          name: newBoardName,
+        });
+        state.lastId += 1;
       }
     },
   },

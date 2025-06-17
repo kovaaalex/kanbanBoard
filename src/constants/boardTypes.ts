@@ -1,10 +1,17 @@
-export interface BoardsState {
-  defaultBoards: string[];
-  customBoards: string[];
-  activeBoards: string[];
+export interface Board {
+  id: string;
+  name: string;
 }
-export const defaultBoardsState: BoardsState = {
-  defaultBoards: ['To Do', 'In Progress', 'Done'],
-  customBoards: [],
-  activeBoards: ['To Do', 'In Progress', 'Done'],
+
+export interface BoardsState {
+  boards: Board[];
+  lastId: number;
+}
+export const initialBoardState: BoardsState = {
+  boards: [
+    { id: '1', name: 'To Do' },
+    { id: '2', name: 'In Progress' },
+    { id: '3', name: 'Done' },
+  ],
+  lastId: 3,
 };
