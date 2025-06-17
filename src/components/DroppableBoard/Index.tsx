@@ -1,4 +1,3 @@
-import { useDrop } from 'react-dnd';
 import type { TaskStatus } from '@/constants/taskTypes';
 import { forwardRef } from 'react';
 import { DroppableBoardComponent } from './styled';
@@ -9,24 +8,26 @@ interface DroppableBoardProps {
   onDrop: (item: { taskId: number; fromStatus: TaskStatus }) => void;
 }
 export const DroppableBoard = forwardRef<HTMLDivElement, DroppableBoardProps>(
-  ({ status, children, onDrop }, ref) => {
-    const [, drop] = useDrop(() => ({
-      accept: 'TASK',
-      drop: (item: { taskId: number; fromStatus: TaskStatus }) => {
+  ({ children, onDrop }, ref) => {
+    const handleDragOver = (e: React.DragEvent) => {
+      e.preventDefault();
+    };
+    const handleDrop = (e: React.DragEvent) => {
+      e.preventDefault();
+      const data = e.dataTransfer.getData('application/json');
+      if (data) {
+        const item = JSON.parse(data);
         onDrop(item);
-        return { toStatus: status };
-      },
-    }));
-    const setRef = (node: HTMLDivElement | null) => {
-      drop(node);
-      if (typeof ref === 'function') {
-        ref(node);
-      } else if (ref) {
-        ref.current = node;
       }
     };
     return (
-      <DroppableBoardComponent ref={setRef}>{children}</DroppableBoardComponent>
+      <DroppableBoardComponent
+        ref={ref}
+        onDragOver={handleDragOver}
+        onDrop={handleDrop}
+      >
+        {children}
+      </DroppableBoardComponent>
     );
   }
 );
