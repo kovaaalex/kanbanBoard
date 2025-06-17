@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux';
 import { AddBoardButton, H2, HeaderComponent } from './styled';
-import { addCustomBoard } from '../../store/boardsSlice';
+import { addCustomBoard } from '@/store/boardsSlice';
 
 const Header = () => {
   const dispatch = useDispatch();

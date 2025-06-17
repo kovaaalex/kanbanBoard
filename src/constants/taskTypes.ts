@@ -17,8 +17,3 @@ export const initialTasksState: TasksState = {
   },
   lastId: 0,
 };
-export interface BoardsState {
-  defaultBoards: string[];
-  customBoards: string[];
-  activeBoards: string[];
-}

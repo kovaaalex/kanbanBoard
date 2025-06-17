@@ -5,11 +5,11 @@ import {
   DeleteButton,
   SaveButton,
 } from './styled';
-import Priority from '../Priority/Index';
+import Priority from '@/components/Priority/Index';
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { deleteTask, updateTask } from '../../store/taskSlice';
-import type { TaskItem, TaskStatus } from '../../constants/taskTypes';
+import { deleteTask, updateTask } from '@/store/taskSlice';
+import type { TaskItem, TaskStatus } from '@/constants/taskTypes';
 import { useDrag } from 'react-dnd';
 import { FaTrashAlt } from 'react-icons/fa';
 interface TaskProps {

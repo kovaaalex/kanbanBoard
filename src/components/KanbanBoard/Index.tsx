@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
-import Board from '../Board/Index';
+import Board from '@/components/Board/Index';
 import { KanbanContainer } from './styled';
-import type { RootState } from '../../store/store';
+import type { RootState } from '@/store/store';
 const KanbanBoard = () => {
   const activeBoards = useSelector((state: RootState) => state.boards.boards);
   return (

@@ -1,5 +1,5 @@
 import { useDrop } from 'react-dnd';
-import type { TaskStatus } from '../../constants/taskTypes';
+import type { TaskStatus } from '@/constants/taskTypes';
 import { forwardRef } from 'react';
 import { DroppableBoardComponent } from './styled';
 

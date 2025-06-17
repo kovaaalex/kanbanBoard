@@ -1,5 +1,5 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
-import { initialBoardState } from '../constants/boardTypes';
+import { initialBoardState } from '@/constants/boardTypes';
 
 export const boardsSlice = createSlice({
   name: 'boards',

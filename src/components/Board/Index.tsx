@@ -1,5 +1,5 @@
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import Tasks from '../Tasks/Index';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import Tasks from '@/components/Tasks/Index';
 import {
   AddTask,
   AddTaskButton,
@@ -9,9 +9,9 @@ import {
   Plus,
   TaskLength,
 } from './styled';
-import type { TaskStatus } from '../../constants/taskTypes';
-import { addTask, moveTask, initializeBoardTasks } from '../../store/taskSlice';
-import { DroppableBoard } from '../DroppableBoard/Index';
+import type { TaskStatus } from '@/constants/taskTypes';
+import { addTask, moveTask, initializeBoardTasks } from '@/store/taskSlice';
+import { DroppableBoard } from '@/components/DroppableBoard/Index';
 import { useEffect } from 'react';
 
 interface BoardProps {
