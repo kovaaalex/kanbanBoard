@@ -7,7 +7,7 @@ const KanbanBoard = () => {
   return (
     <KanbanContainer>
       {activeBoards.map((state) => (
-        <Board key={state.id} title={state.name} />
+        <Board key={state.id} item={state} />
       ))}
     </KanbanContainer>
   );

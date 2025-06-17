@@ -11,6 +11,7 @@ import {
   TaskLength,
 } from './styled';
 import type { TaskStatus } from '@/constants/taskTypes';
+import { type IBoard } from '@/constants/boardTypes';
 import {
   addTask,
   moveTask,
@@ -21,21 +22,18 @@ import { DroppableBoard } from '@/components/DroppableBoard/Index';
 import { useEffect, useState } from 'react';
 import { renameBoard } from '@/store/boardsSlice';
 
-interface BoardProps {
-  title: TaskStatus;
-}
-
-const Board = ({ title }: BoardProps) => {
+const Board = ({ item }: { item: IBoard }) => {
+  const { name, color } = item;
   const dispatch = useAppDispatch();
-  const [currentBoard, setBoard] = useState(title);
+  const [currentBoard, setBoard] = useState(name);
   const [showSave, setShowSave] = useState(false);
   const { tasks } = useAppSelector((state) => ({
-    tasks: state.tasks.tasks[title] || [],
+    tasks: state.tasks.tasks[name] || [],
     boards: state.boards.boards,
   }));
   useEffect(() => {
-    dispatch(initializeBoardTasks(title));
-  }, [title, dispatch]);
+    dispatch(initializeBoardTasks(name));
+  }, [name, dispatch]);
 
   const handleDrop = (
     item: { taskId: number; fromStatus: TaskStatus },
@@ -58,7 +56,7 @@ const Board = ({ title }: BoardProps) => {
   const handleAddTask = () => {
     dispatch(
       addTask({
-        status: title,
+        status: name,
         task: {
           title: 'New Task',
           description: '',
@@ -68,18 +66,18 @@ const Board = ({ title }: BoardProps) => {
     );
   };
   const handleSave = () => {
-    if (currentBoard.trim() !== title && currentBoard.trim() !== '') {
+    if (currentBoard.trim() !== name && currentBoard.trim() !== '') {
       const newName = currentBoard.trim() as TaskStatus;
-      dispatch(renameBoard({ oldName: title, newName }));
-      dispatch(renameTaskStatus({ oldStatus: title, newStatus: newName }));
+      dispatch(renameBoard({ oldName: name, newName }));
+      dispatch(renameTaskStatus({ oldStatus: name, newStatus: newName }));
       setShowSave(false);
     }
   };
   return (
     <BoardItem>
-      <DroppableBoard status={title} onDrop={(item) => handleDrop(item, title)}>
-        <Column $status={title}>
-          <TaskLength $status={title}>{tasks.length}</TaskLength>
+      <DroppableBoard status={name} onDrop={(item) => handleDrop(item, name)}>
+        <Column $statusColor={color}>
+          <TaskLength $statusColor={color}>{tasks.length}</TaskLength>
           <H4
             value={currentBoard}
             minLength={2}
@@ -92,9 +90,9 @@ const Board = ({ title }: BoardProps) => {
             <Plus onClick={handleAddTask} />
           )}
         </Column>
-        <Tasks title={title} tasks={tasks} />
+        <Tasks title={name} tasks={tasks} />
         <AddTask>
-          <AddTaskButton onClick={handleAddTask} $status={title}>
+          <AddTaskButton onClick={handleAddTask} $statusColor={color}>
             Add task...
           </AddTaskButton>
         </AddTask>

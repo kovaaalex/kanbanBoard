@@ -1,4 +1,11 @@
+import { getBackgroundColor } from '@/utils/getBackgroundColor';
 import styled from 'styled-components';
+export const boardColors = {
+  '#4F46E5': '#EEF2FF',
+  '#F59E0B': '#FFFBEB',
+  '#22C55E': '#F0FDF4',
+  '#DC2626': '#FEE2E2',
+};
 export const BoardItem = styled.div`
   display: flex;
   flex-direction: column;
@@ -8,21 +15,14 @@ export const BoardItem = styled.div`
   height: auto;
 `;
 export const Column = styled.div<{
-  $status: 'To Do' | 'In Progress' | 'Done' | string;
+  $statusColor?: string;
 }>`
   display: flex;
   align-items: center;
   color: white;
   gap: 8px;
   position: relative;
-  background-color: ${({ $status }) =>
-    $status === 'To Do'
-      ? '#4f46e5'
-      : $status === 'In Progress'
-        ? '#F59E0B'
-        : $status === 'Done'
-          ? '#22C55E'
-          : '#DC2626'};
+  background-color: ${(props) => props.$statusColor || '#FEE2E2'};
   border-radius: 100px;
   padding: 8px;
 `;
@@ -65,20 +65,13 @@ export const Plus = styled.span`
   }
 `;
 export const TaskLength = styled.span<{
-  $status: 'To Do' | 'In Progress' | 'Done' | string;
+  $statusColor?: string;
 }>`
   display: inline-block;
   padding: 6px 12px;
   border-radius: 50%;
   background-color: white;
-  color: ${({ $status }) =>
-    $status === 'To Do'
-      ? '#4F46E5'
-      : $status === 'In Progress'
-        ? '#F59E0B'
-        : $status === 'Done'
-          ? '#22C55E'
-          : '#DC2626'};
+  color: ${(props) => props.$statusColor || '#FEE2E2'};
   font-size: 14px;
   line-height: 20px;
 `;
@@ -89,26 +82,12 @@ export const AddTask = styled.div`
   box-shadow: 0px 2px 4px -2px rgba(23, 23, 23, 0.06);
 `;
 export const AddTaskButton = styled.button<{
-  $status: 'To Do' | 'In Progress' | 'Done' | string;
+  $statusColor?: string;
 }>`
   font-size: 12px;
   line-height: 16px;
-  background-color: ${({ $status }) =>
-    $status === 'To Do'
-      ? '#EEF2FF'
-      : $status === 'In Progress'
-        ? '#FFFBEB'
-        : $status === 'Done'
-          ? '#F0FDF4'
-          : '#FEE2E2'};
-  color: ${({ $status }) =>
-    $status === 'To Do'
-      ? '#4F46E5'
-      : $status === 'In Progress'
-        ? '#F59E0B'
-        : $status === 'Done'
-          ? '#22C55E'
-          : '#DC2626'};
+  background-color: ${(props) => getBackgroundColor(props.$statusColor)};
+  color: ${(props) => props.$statusColor || '#FEE2E2'};
   padding: 4px 8px;
   border: none;
 `;

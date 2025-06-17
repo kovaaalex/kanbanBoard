@@ -16,6 +16,7 @@ export const boardsSlice = createSlice({
         state.boards.push({
           id: newId,
           name: newBoardName,
+          color: '#DC2626',
         });
         state.lastId += 1;
       }
