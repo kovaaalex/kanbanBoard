@@ -19,6 +19,8 @@ const Board = ({ item }: { item: IBoard }) => {
   const dispatch = useAppDispatch();
   const [currentBoard, setBoard] = useState(name);
   const [showSave, setShowSave] = useState(false);
+  const [currentColor, setCurrentColor] = useState(color);
+
   const { tasks } = useAppSelector((state) => ({
     tasks: state.tasks.tasks[name] || [],
     boards: state.boards.boards,
@@ -27,7 +29,9 @@ const Board = ({ item }: { item: IBoard }) => {
   useEffect(() => {
     dispatch(initializeBoardTasks(name));
   }, [name, dispatch]);
-
+  const handleColorChange = (newColor: string) => {
+    setCurrentColor(newColor);
+  };
   const handleDrop = (
     item: { taskId: number; fromStatus: TaskStatus },
     toStatus: TaskStatus
@@ -74,7 +78,7 @@ const Board = ({ item }: { item: IBoard }) => {
     <BoardItem>
       <DroppableBoard status={name} onDrop={(item) => handleDrop(item, name)}>
         <BoardColumn
-          color={color}
+          color={currentColor}
           currentBoard={currentBoard}
           showSave={showSave}
           taskCount={tasks.length}
@@ -82,10 +86,11 @@ const Board = ({ item }: { item: IBoard }) => {
           onSave={handleSave}
           onAddTask={handleAddTask}
           boardId={id}
+          onChangeColor={handleColorChange}
         />
         <Tasks title={name} tasks={tasks} />
         <AddTask>
-          <AddTaskButton onClick={handleAddTask} $statusColor={color}>
+          <AddTaskButton onClick={handleAddTask} $statusColor={currentColor}>
             Add task...
           </AddTaskButton>
         </AddTask>

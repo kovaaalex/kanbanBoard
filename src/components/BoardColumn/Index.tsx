@@ -1,5 +1,6 @@
-import { FaTrashAlt } from 'react-icons/fa';
+import { FaPalette, FaTrashAlt } from 'react-icons/fa';
 import {
+  ColorPickerButton,
   Column,
   DeleteButton,
   H4,
@@ -10,6 +11,8 @@ import {
 import { useAppDispatch } from '@/store/hooks';
 import { dropBoard } from '@/store/boardsSlice';
 import { dropTaskStatus } from '@/store/taskSlice';
+import { useState } from 'react';
+import { ColorPicker } from '../ColorPicker/Index';
 interface BoardColumnProps {
   color: string;
   currentBoard: string;
@@ -19,6 +22,7 @@ interface BoardColumnProps {
   onSave: () => void;
   onAddTask: () => void;
   boardId: string;
+  onChangeColor: (color: string) => void;
 }
 export const BoardColumn = ({
   color,
@@ -29,8 +33,14 @@ export const BoardColumn = ({
   onSave,
   onAddTask,
   boardId,
+  onChangeColor,
 }: BoardColumnProps) => {
   const dispatch = useAppDispatch();
+  const [showColorPicker, setShowColorPicker] = useState(false);
+  const handleColorChange = (newColor: string) => {
+    onChangeColor(newColor);
+    setShowColorPicker(false);
+  };
   const handleDelete = () => {
     dispatch(dropTaskStatus(currentBoard));
     dispatch(dropBoard(boardId));
@@ -44,6 +54,12 @@ export const BoardColumn = ({
         maxLength={25}
         onChange={onBoardChange}
       />
+      <ColorPickerButton onClick={() => setShowColorPicker(!showColorPicker)}>
+        <FaPalette />
+      </ColorPickerButton>
+      {showColorPicker && (
+        <ColorPicker onChange={handleColorChange}></ColorPicker>
+      )}
       <DeleteButton onClick={handleDelete}>
         <FaTrashAlt />
       </DeleteButton>
