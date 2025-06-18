@@ -1,15 +1,6 @@
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import Tasks from '@/components/Tasks/Index';
-import {
-  AddTask,
-  AddTaskButton,
-  BoardItem,
-  Column,
-  H4,
-  Plus,
-  SaveButton,
-  TaskLength,
-} from './styled';
+import { AddTask, AddTaskButton, BoardItem } from './styled';
 import type { TaskStatus } from '@/constants/taskTypes';
 import { type IBoard } from '@/constants/boardTypes';
 import {
@@ -21,6 +12,7 @@ import {
 import { DroppableBoard } from '@/components/DroppableBoard/Index';
 import { useEffect, useState } from 'react';
 import { renameBoard } from '@/store/boardsSlice';
+import { BoardColumn } from '../BoardColumn/Index';
 
 const Board = ({ item }: { item: IBoard }) => {
   const { name, color } = item;
@@ -31,6 +23,7 @@ const Board = ({ item }: { item: IBoard }) => {
     tasks: state.tasks.tasks[name] || [],
     boards: state.boards.boards,
   }));
+
   useEffect(() => {
     dispatch(initializeBoardTasks(name));
   }, [name, dispatch]);
@@ -49,10 +42,12 @@ const Board = ({ item }: { item: IBoard }) => {
       );
     }
   };
+
   const handleBoardChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setBoard(e.target.value);
     setShowSave(true);
   };
+
   const handleAddTask = () => {
     dispatch(
       addTask({
@@ -65,6 +60,7 @@ const Board = ({ item }: { item: IBoard }) => {
       })
     );
   };
+
   const handleSave = () => {
     if (currentBoard.trim() !== name && currentBoard.trim() !== '') {
       const newName = currentBoard.trim() as TaskStatus;
@@ -73,23 +69,19 @@ const Board = ({ item }: { item: IBoard }) => {
       setShowSave(false);
     }
   };
+
   return (
     <BoardItem>
       <DroppableBoard status={name} onDrop={(item) => handleDrop(item, name)}>
-        <Column $statusColor={color}>
-          <TaskLength $statusColor={color}>{tasks.length}</TaskLength>
-          <H4
-            value={currentBoard}
-            minLength={2}
-            maxLength={25}
-            onChange={handleBoardChange}
-          />
-          {showSave ? (
-            <SaveButton onClick={handleSave}>Save</SaveButton>
-          ) : (
-            <Plus onClick={handleAddTask} />
-          )}
-        </Column>
+        <BoardColumn
+          color={color}
+          currentBoard={currentBoard}
+          showSave={showSave}
+          taskCount={tasks.length}
+          onBoardChange={handleBoardChange}
+          onSave={handleSave}
+          onAddTask={handleAddTask}
+        />
         <Tasks title={name} tasks={tasks} />
         <AddTask>
           <AddTaskButton onClick={handleAddTask} $statusColor={color}>
