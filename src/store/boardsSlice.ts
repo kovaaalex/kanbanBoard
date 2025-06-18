@@ -33,8 +33,12 @@ export const boardsSlice = createSlice({
         state.boards[boardIndex].name = newName;
       }
     },
+    dropBoard: (state, action: PayloadAction<string>) => {
+      const boardId = action.payload;
+      state.boards = state.boards.filter((item) => item.id !== boardId);
+    },
   },
 });
 
-export const { addCustomBoard, renameBoard } = boardsSlice.actions;
+export const { addCustomBoard, renameBoard, dropBoard } = boardsSlice.actions;
 export default boardsSlice.reducer;

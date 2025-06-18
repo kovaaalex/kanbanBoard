@@ -1,4 +1,15 @@
-import { Column, H4, Plus, SaveButton, TaskLength } from './styled';
+import { FaTrashAlt } from 'react-icons/fa';
+import {
+  Column,
+  DeleteButton,
+  H4,
+  Plus,
+  SaveButton,
+  TaskLength,
+} from './styled';
+import { useAppDispatch } from '@/store/hooks';
+import { dropBoard } from '@/store/boardsSlice';
+import { dropTaskStatus } from '@/store/taskSlice';
 interface BoardColumnProps {
   color: string;
   currentBoard: string;
@@ -7,6 +18,7 @@ interface BoardColumnProps {
   onBoardChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onSave: () => void;
   onAddTask: () => void;
+  boardId: string;
 }
 export const BoardColumn = ({
   color,
@@ -16,7 +28,13 @@ export const BoardColumn = ({
   onBoardChange,
   onSave,
   onAddTask,
+  boardId,
 }: BoardColumnProps) => {
+  const dispatch = useAppDispatch();
+  const handleDelete = () => {
+    dispatch(dropTaskStatus(currentBoard));
+    dispatch(dropBoard(boardId));
+  };
   return (
     <Column $statusColor={color}>
       <TaskLength $statusColor={color}>{taskCount}</TaskLength>
@@ -26,6 +44,9 @@ export const BoardColumn = ({
         maxLength={25}
         onChange={onBoardChange}
       />
+      <DeleteButton onClick={handleDelete}>
+        <FaTrashAlt />
+      </DeleteButton>
       {showSave ? (
         <SaveButton onClick={onSave}>Save</SaveButton>
       ) : (

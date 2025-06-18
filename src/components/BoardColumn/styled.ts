@@ -100,3 +100,11 @@ export const SaveButton = styled.button`
   padding: 0;
   color: white;
 `;
+export const DeleteButton = styled.button`
+  padding: 0;
+  position: absolute;
+  top: 14px;
+  right: 45px;
+  background: none;
+  color: white;
+`;

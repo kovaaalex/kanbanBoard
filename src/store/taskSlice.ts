@@ -88,6 +88,12 @@ const tasksSlice = createSlice({
         delete state.tasks[oldStatus];
       }
     },
+    dropTaskStatus: (state, action: PayloadAction<string>) => {
+      const statusToRemove = action.payload;
+      if (state.tasks[statusToRemove]) {
+        delete state.tasks[statusToRemove];
+      }
+    },
   },
 });
 export const {
@@ -98,5 +104,6 @@ export const {
   updateTask,
   initializeBoardTasks,
   renameTaskStatus,
+  dropTaskStatus,
 } = tasksSlice.actions;
 export default tasksSlice.reducer;

@@ -10,8 +10,7 @@ export const BoardItem = styled.div`
   display: flex;
   flex-direction: column;
   gap: 12px;
-  min-width: 240px;
-  max-width: 300px;
+  min-width: 300px;
   height: auto;
 `;
 export const AddTask = styled.div`

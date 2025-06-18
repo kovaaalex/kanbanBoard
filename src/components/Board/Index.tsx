@@ -15,7 +15,7 @@ import { renameBoard } from '@/store/boardsSlice';
 import { BoardColumn } from '../BoardColumn/Index';
 
 const Board = ({ item }: { item: IBoard }) => {
-  const { name, color } = item;
+  const { id, name, color } = item;
   const dispatch = useAppDispatch();
   const [currentBoard, setBoard] = useState(name);
   const [showSave, setShowSave] = useState(false);
@@ -81,6 +81,7 @@ const Board = ({ item }: { item: IBoard }) => {
           onBoardChange={handleBoardChange}
           onSave={handleSave}
           onAddTask={handleAddTask}
+          boardId={id}
         />
         <Tasks title={name} tasks={tasks} />
         <AddTask>
