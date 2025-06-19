@@ -1,34 +1,38 @@
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import Tasks from '@/components/Tasks/Index';
-import {
-  AddTask,
-  AddTaskButton,
-  BoardItem,
-  Column,
-  H4,
-  Plus,
-  TaskLength,
-} from './styled';
+import { AddTask, AddTaskButton, BoardItem } from './styled';
 import type { TaskStatus } from '@/constants/taskTypes';
-import { addTask, moveTask, initializeBoardTasks } from '@/store/taskSlice';
+import { type IBoard } from '@/constants/boardTypes';
+import {
+  addTask,
+  moveTask,
+  initializeBoardTasks,
+  renameTaskStatus,
+} from '@/store/taskSlice';
 import { DroppableBoard } from '@/components/DroppableBoard/Index';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { changeBoardColor, renameBoard } from '@/store/boardsSlice';
+import { BoardColumn } from '../BoardColumn/Index';
 
-interface BoardProps {
-  title: TaskStatus;
-}
-
-const Board = ({ title }: BoardProps) => {
+const Board = ({ item }: { item: IBoard }) => {
+  const { id, name, color } = item;
   const dispatch = useAppDispatch();
+  const [currentBoard, setBoard] = useState(name);
+  const [showSave, setShowSave] = useState(false);
+  const [currentColor, setCurrentColor] = useState(color);
 
   const { tasks } = useAppSelector((state) => ({
-    tasks: state.tasks.tasks[title] || [],
+    tasks: state.tasks.tasks[name] || [],
     boards: state.boards.boards,
   }));
-  useEffect(() => {
-    dispatch(initializeBoardTasks(title));
-  }, [title, dispatch]);
 
+  useEffect(() => {
+    dispatch(initializeBoardTasks(name));
+  }, [name, dispatch]);
+  const handleColorChange = (newColor: string) => {
+    setCurrentColor(newColor);
+    dispatch(changeBoardColor({ boardId: id, newColor }));
+  };
   const handleDrop = (
     item: { taskId: number; fromStatus: TaskStatus },
     toStatus: TaskStatus
@@ -43,11 +47,16 @@ const Board = ({ title }: BoardProps) => {
       );
     }
   };
-  const handleBoardChange = () => {};
+
+  const handleBoardChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setBoard(e.target.value);
+    setShowSave(true);
+  };
+
   const handleAddTask = () => {
     dispatch(
       addTask({
-        status: title,
+        status: name,
         task: {
           title: 'New Task',
           description: '',
@@ -57,17 +66,32 @@ const Board = ({ title }: BoardProps) => {
     );
   };
 
+  const handleSave = () => {
+    if (currentBoard.trim() !== name && currentBoard.trim() !== '') {
+      const newName = currentBoard.trim() as TaskStatus;
+      dispatch(renameBoard({ oldName: name, newName }));
+      dispatch(renameTaskStatus({ oldStatus: name, newStatus: newName }));
+      setShowSave(false);
+    }
+  };
+
   return (
     <BoardItem>
-      <DroppableBoard status={title} onDrop={(item) => handleDrop(item, title)}>
-        <Column $status={title}>
-          <TaskLength $status={title}>{tasks.length}</TaskLength>
-          <H4 value={title} maxLength={50} onChange={handleBoardChange} />
-          <Plus onClick={handleAddTask} />
-        </Column>
-        <Tasks title={title} tasks={tasks} />
+      <DroppableBoard status={name} onDrop={(item) => handleDrop(item, name)}>
+        <BoardColumn
+          color={currentColor}
+          currentBoard={currentBoard}
+          showSave={showSave}
+          taskCount={tasks.length}
+          onBoardChange={handleBoardChange}
+          onSave={handleSave}
+          onAddTask={handleAddTask}
+          boardId={id}
+          onChangeColor={handleColorChange}
+        />
+        <Tasks title={name} tasks={tasks} />
         <AddTask>
-          <AddTaskButton onClick={handleAddTask} $status={title}>
+          <AddTaskButton onClick={handleAddTask} $statusColor={currentColor}>
             Add task...
           </AddTaskButton>
         </AddTask>

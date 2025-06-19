@@ -53,7 +53,6 @@ const tasksSlice = createSlice({
       if (taskIndex !== -1) {
         const [task] = state.tasks[fromStatus].splice(taskIndex, 1);
         state.tasks[toStatus].push(task);
-        // localStorage.setItem('tasks', JSON.stringify(state));
       }
     },
     updateTask: (
@@ -72,12 +71,27 @@ const tasksSlice = createSlice({
           ...updates,
         };
       }
-      // localStorage.setItem('tasks', JSON.stringify(state));
     },
     initializeBoardTasks: (state, action: PayloadAction<string>) => {
       const boardName = action.payload;
       if (!state.tasks[boardName]) {
         state.tasks[boardName] = [];
+      }
+    },
+    renameTaskStatus: (
+      state,
+      action: PayloadAction<{ oldStatus: TaskStatus; newStatus: TaskStatus }>
+    ) => {
+      const { oldStatus, newStatus } = action.payload;
+      if (state.tasks[oldStatus]) {
+        state.tasks[newStatus] = state.tasks[oldStatus];
+        delete state.tasks[oldStatus];
+      }
+    },
+    dropTaskStatus: (state, action: PayloadAction<string>) => {
+      const statusToRemove = action.payload;
+      if (state.tasks[statusToRemove]) {
+        delete state.tasks[statusToRemove];
       }
     },
   },
@@ -89,5 +103,7 @@ export const {
   moveTask,
   updateTask,
   initializeBoardTasks,
+  renameTaskStatus,
+  dropTaskStatus,
 } = tasksSlice.actions;
 export default tasksSlice.reducer;
