@@ -7,6 +7,7 @@ export const ColorsList = styled.ul`
   right: 0;
   padding: 15px;
   display: flex;
+  gap: 10px;
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;

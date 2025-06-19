@@ -37,8 +37,21 @@ export const boardsSlice = createSlice({
       const boardId = action.payload;
       state.boards = state.boards.filter((item) => item.id !== boardId);
     },
+    changeBoardColor: (
+      state,
+      action: PayloadAction<{ boardId: string; newColor: string }>
+    ) => {
+      const { boardId, newColor } = action.payload;
+      const boardIndex = state.boards.findIndex(
+        (board) => board.id === boardId
+      );
+      if (boardIndex !== -1) {
+        state.boards[boardIndex].color = newColor;
+      }
+    },
   },
 });
 
-export const { addCustomBoard, renameBoard, dropBoard } = boardsSlice.actions;
+export const { addCustomBoard, renameBoard, dropBoard, changeBoardColor } =
+  boardsSlice.actions;
 export default boardsSlice.reducer;

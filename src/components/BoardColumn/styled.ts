@@ -111,6 +111,7 @@ export const DeleteButton = styled.button`
 export const ColorPickerButton = styled.button`
   background: none;
   border: none;
+  outline: none;
   cursor: pointer;
   color: white;
   position: absolute;

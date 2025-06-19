@@ -11,7 +11,7 @@ import {
 } from '@/store/taskSlice';
 import { DroppableBoard } from '@/components/DroppableBoard/Index';
 import { useEffect, useState } from 'react';
-import { renameBoard } from '@/store/boardsSlice';
+import { changeBoardColor, renameBoard } from '@/store/boardsSlice';
 import { BoardColumn } from '../BoardColumn/Index';
 
 const Board = ({ item }: { item: IBoard }) => {
@@ -31,6 +31,7 @@ const Board = ({ item }: { item: IBoard }) => {
   }, [name, dispatch]);
   const handleColorChange = (newColor: string) => {
     setCurrentColor(newColor);
+    dispatch(changeBoardColor({ boardId: id, newColor }));
   };
   const handleDrop = (
     item: { taskId: number; fromStatus: TaskStatus },
