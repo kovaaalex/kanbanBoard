@@ -49,6 +49,8 @@ export const BoardColumn = ({
     <Column $statusColor={color}>
       <TaskLength $statusColor={color}>{taskCount}</TaskLength>
       <H4
+        name={boardId}
+        id={boardId}
         value={currentBoard}
         minLength={2}
         maxLength={25}
