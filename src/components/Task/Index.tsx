@@ -9,14 +9,8 @@ import Priority from '@/components/Priority/Index';
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { deleteTask, updateTask } from '@/store/taskSlice';
-import type { TaskItem, TaskStatus } from '@/constants/taskTypes';
 import { FaTrashAlt } from 'react-icons/fa';
-interface TaskProps {
-  task: TaskItem;
-  status: TaskStatus;
-  onPriorityChange?: (priority: 'Low' | 'Medium' | 'High' | 'Priority') => void;
-}
-
+import type { Priorities, TaskProps } from '@/constants/taskTypes';
 const Task = ({ task, status, onPriorityChange }: TaskProps) => {
   const { id, title, description, priority } = task;
   const dispatch = useDispatch();
@@ -36,7 +30,6 @@ const Task = ({ task, status, onPriorityChange }: TaskProps) => {
   };
   const autoHeight = (element: HTMLTextAreaElement | null) => {
     if (element) {
-      element.style.height = 'auto';
       element.style.height = `${element.scrollHeight}px`;
     }
   };
@@ -48,9 +41,7 @@ const Task = ({ task, status, onPriorityChange }: TaskProps) => {
     autoHeight(e.target);
     setShowSave(true);
   };
-  const handlePriorityChange = (
-    newPriority: 'Low' | 'Medium' | 'High' | 'Priority'
-  ) => {
+  const handlePriorityChange = (newPriority: Priorities) => {
     setCurrentPriority(newPriority);
     setShowSave(true);
     if (onPriorityChange) {

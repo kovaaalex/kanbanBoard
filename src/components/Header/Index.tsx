@@ -1,4 +1,4 @@
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   AddBoardButton,
   H2,
@@ -9,12 +9,15 @@ import {
 import { addCustomBoard } from '@/store/boardsSlice';
 import Hamburger from 'hamburger-react';
 import { useState } from 'react';
+import type { RootState } from '@/store/store';
+import { generateBoardName } from '@/utils/generateBoardName';
 
 const Header = () => {
   const dispatch = useDispatch();
+  const boards = useSelector((state: RootState) => state.boards);
   const [isOpen, setOpen] = useState(false);
   const handleAddBoard = () => {
-    const defaultName = `New Board ${Math.floor(Math.random() * 1000)}`;
+    const defaultName = generateBoardName(boards.lastId);
     dispatch(addCustomBoard(defaultName));
   };
   return (

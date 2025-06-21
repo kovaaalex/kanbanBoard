@@ -1,10 +1,7 @@
 import { PriorityContainer, PriorityItem, PriorityList } from './styled';
 import { useState, useEffect } from 'react';
-interface IPriority {
-  priority?: Priorities;
-  onChange?: (priority: Priorities) => void;
-}
-type Priorities = 'Low' | 'Medium' | 'High' | 'Priority';
+import type { Priorities } from '@/constants/taskTypes';
+import type { IPriority } from '@/constants/taskTypes';
 const priorityItems: Priorities[] = ['Low', 'Medium', 'High', 'Priority'];
 const Priority = ({ priority = 'Priority', onChange }: IPriority) => {
   const [isOpen, setIsOpen] = useState(false);

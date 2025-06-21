@@ -1,6 +1,16 @@
+export type Priorities = 'Low' | 'Medium' | 'High' | 'Priority';
+export interface IPriority {
+  priority?: Priorities;
+  onChange?: (priority: Priorities) => void;
+}
+export interface TaskProps {
+  task: TaskItem;
+  status: TaskStatus;
+  onPriorityChange?: (priority: Priorities) => void;
+}
 export interface TaskItem {
   id: number;
-  priority: 'Low' | 'Medium' | 'High' | 'Priority';
+  priority: Priorities;
   title: string;
   description: string;
 }
