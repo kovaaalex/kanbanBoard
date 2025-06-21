@@ -20,5 +20,7 @@ describe('Color', function () {
 describe('BoardName', function () {
   it('Should return board name', () => {
     expect(generateBoardName(5)).toBe('Board5');
+    expect(generateBoardName(7)).toBe('Board7');
+    expect(generateBoardName(4)).toBe('Board4');
   });
 });

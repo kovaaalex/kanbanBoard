@@ -9,6 +9,7 @@ export const boardColors = {
 export const BoardItem = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 12px;
   min-width: 300px;
   height: auto;
