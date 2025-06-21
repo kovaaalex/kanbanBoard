@@ -5,4 +5,8 @@ export const KanbanContainer = styled.div`
   overflow-x: auto;
   justify-content: space-evenly;
   gap: 16px;
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: center;
+  }
 `;

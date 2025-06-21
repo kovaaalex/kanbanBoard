@@ -13,17 +13,7 @@ import { dropBoard } from '@/store/boardsSlice';
 import { dropTaskStatus } from '@/store/taskSlice';
 import { useState } from 'react';
 import { ColorPicker } from '../ColorPicker/Index';
-interface BoardColumnProps {
-  color: string;
-  currentBoard: string;
-  showSave: boolean;
-  taskCount: number;
-  onBoardChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onSave: () => void;
-  onAddTask: () => void;
-  boardId: string;
-  onChangeColor: (color: string) => void;
-}
+import type { BoardColumnProps } from '@/constants/boardTypes';
 export const BoardColumn = ({
   color,
   currentBoard,

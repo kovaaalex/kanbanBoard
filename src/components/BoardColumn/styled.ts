@@ -25,6 +25,7 @@ export const Column = styled.div<{
   background-color: ${(props) => props.$statusColor || '#FEE2E2'};
   border-radius: 100px;
   padding: 8px;
+  max-width: 300px;
 `;
 export const H4 = styled.input`
   width: 150px;
@@ -80,6 +81,7 @@ export const AddTask = styled.div`
   padding: 12px;
   border: 1px solid #e2e8f0;
   box-shadow: 0px 2px 4px -2px rgba(23, 23, 23, 0.06);
+  max-width: 300px;
 `;
 export const AddTaskButton = styled.button<{
   $statusColor?: string;
