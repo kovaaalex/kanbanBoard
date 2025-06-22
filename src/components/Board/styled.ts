@@ -15,6 +15,7 @@ export const BoardItem = styled.div`
   height: auto;
 `;
 export const AddTask = styled.div`
+  background-color: white;
   border-radius: 24px;
   padding: 12px;
   border: 1px solid #e2e8f0;

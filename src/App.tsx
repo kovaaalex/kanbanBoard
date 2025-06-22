@@ -5,14 +5,22 @@ import './App.css';
 import Header from '@/components/Header/Index';
 import KanbanBoard from '@/components/KanbanBoard/Index';
 import ErrorBoundary from '@/components/ErrorBoundary';
+import { ThemeButton } from './components/ThemeButton/Index';
+import { useAppSelector } from './store/hooks';
+import { useEffect } from 'react';
 
 const App = () => {
+  const theme = useAppSelector((state) => state.theme.currentTheme);
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+  }, [theme]);
   return (
     <ErrorBoundary
       fallback={<p>Что-то пошло не так, перезапустите страницу</p>}
     >
       <Header />
       <KanbanBoard />
+      <ThemeButton />
     </ErrorBoundary>
   );
 };
