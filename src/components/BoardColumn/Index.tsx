@@ -8,11 +8,11 @@ import {
   SaveButton,
   TaskLength,
 } from './styled';
-import { useAppDispatch } from '@/store/hooks';
+import { useAppDispatch } from '@/hooks/hooks';
 import { dropBoard } from '@/store/boardsSlice';
 import { dropTaskStatus } from '@/store/taskSlice';
 import { useState } from 'react';
-import { ColorPicker } from '../ColorPicker/Index';
+import { ColorPicker } from '@/components/ColorPicker/Index';
 import type { BoardColumnProps } from '@/constants/boardTypes';
 export const BoardColumn = ({
   color,

@@ -1,6 +1,6 @@
-import type { TaskItem } from '../../constants/taskTypes';
-import { useAppSelector } from '../../store/hooks';
-import Task from '../Task/Index';
+import type { TaskItem } from '@/constants/taskTypes';
+import { useAppSelector } from '@/hooks/hooks';
+import Task from '@/components/Task/Index';
 import { TasksList } from './styled';
 
 interface TaskProps {

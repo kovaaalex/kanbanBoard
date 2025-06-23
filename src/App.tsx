@@ -5,8 +5,8 @@ import './App.css';
 import Header from '@/components/Header/Index';
 import KanbanBoard from '@/components/KanbanBoard/Index';
 import ErrorBoundary from '@/components/ErrorBoundary';
-import { ThemeButton } from './components/ThemeButton/Index';
-import { useAppSelector } from './store/hooks';
+import { ThemeButton } from '@/components/ThemeButton/Index';
+import { useAppSelector } from '@/hooks/hooks';
 import { useEffect } from 'react';
 
 const App = () => {
