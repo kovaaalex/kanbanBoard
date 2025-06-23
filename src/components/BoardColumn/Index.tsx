@@ -8,17 +8,25 @@ import {
   SaveButton,
   TaskLength,
 } from './styled';
-import { useAppDispatch } from '@/hooks/hooks';
+import { useAppDispatch, useAppSelector } from '@/hooks/hooks';
 import { dropBoard } from '@/store/boardsSlice';
 import { dropTaskStatus } from '@/store/taskSlice';
 import { useCallback, useState } from 'react';
 import { ColorPicker } from '@/components/ColorPicker/Index';
-import type { BoardColumnProps } from '@/constants/boardTypes';
+export interface BoardColumnProps {
+  color: string;
+  currentBoard: string;
+  showSave: boolean;
+  onBoardChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onSave: () => void;
+  onAddTask: () => void;
+  boardId: string;
+  onChangeColor: (color: string) => void;
+}
 export const BoardColumn = ({
   color,
   currentBoard,
   showSave,
-  taskCount,
   onBoardChange,
   onSave,
   onAddTask,
@@ -26,6 +34,7 @@ export const BoardColumn = ({
   onChangeColor,
 }: BoardColumnProps) => {
   const dispatch = useAppDispatch();
+  const tasks = useAppSelector((state) => state.tasks.tasks[currentBoard]);
   const [showColorPicker, setShowColorPicker] = useState(false);
   const handleColorChange = (newColor: string) => {
     onChangeColor(newColor);
@@ -40,7 +49,7 @@ export const BoardColumn = ({
   }, []);
   return (
     <Column $statusColor={color}>
-      <TaskLength $statusColor={color}>{taskCount}</TaskLength>
+      <TaskLength $statusColor={color}>{tasks.length}</TaskLength>
       <H4
         name={boardId}
         id={boardId}

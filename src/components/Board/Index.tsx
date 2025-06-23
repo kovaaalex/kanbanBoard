@@ -1,8 +1,8 @@
-import { useAppDispatch, useAppSelector } from '@/hooks/hooks';
+import { useAppDispatch } from '@/hooks/hooks';
 import Tasks from '@/components/Tasks/Index';
 import { AddTask, AddTaskButton, BoardItem } from './styled';
-import type { TaskStatus } from '@/constants/taskTypes';
-import { type IBoard } from '@/constants/boardTypes';
+import type { BoardName } from '@/types/IComponents/IBoard';
+import { type IBoard } from '@/types/IComponents/IBoard';
 import {
   addTask,
   moveTask,
@@ -21,21 +21,16 @@ const Board = ({ item }: { item: IBoard }) => {
   const [showSave, setShowSave] = useState(false);
   const [currentColor, setCurrentColor] = useState(color);
 
-  const { tasks } = useAppSelector((state) => ({
-    tasks: state.tasks.tasks[name] || [],
-    boards: state.boards.boards,
-  }));
-
   useEffect(() => {
     dispatch(initializeBoardTasks(name));
-  }, [name, dispatch]);
+  }, [name]);
   const handleColorChange = (newColor: string) => {
     setCurrentColor(newColor);
     dispatch(changeBoardColor({ boardId: id, newColor }));
   };
   const handleDrop = (
-    item: { taskId: number; fromStatus: TaskStatus },
-    toStatus: TaskStatus
+    item: { taskId: number; fromStatus: BoardName },
+    toStatus: BoardName
   ) => {
     if (item.fromStatus !== toStatus) {
       dispatch(
@@ -68,7 +63,7 @@ const Board = ({ item }: { item: IBoard }) => {
 
   const handleSave = () => {
     if (currentBoard.trim() !== name && currentBoard.trim() !== '') {
-      const newName = currentBoard.trim() as TaskStatus;
+      const newName = currentBoard.trim() as BoardName;
       dispatch(renameBoard({ oldName: name, newName }));
       dispatch(renameTaskStatus({ oldStatus: name, newStatus: newName }));
       setShowSave(false);
@@ -82,14 +77,13 @@ const Board = ({ item }: { item: IBoard }) => {
           color={currentColor}
           currentBoard={currentBoard}
           showSave={showSave}
-          taskCount={tasks.length}
           onBoardChange={handleBoardChange}
           onSave={handleSave}
           onAddTask={handleAddTask}
           boardId={id}
           onChangeColor={handleColorChange}
         />
-        <Tasks title={name} tasks={tasks} />
+        <Tasks title={name} />
         <AddTask>
           <AddTaskButton onClick={handleAddTask} $statusColor={currentColor}>
             Add task...

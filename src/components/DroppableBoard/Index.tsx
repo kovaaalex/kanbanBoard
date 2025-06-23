@@ -1,11 +1,11 @@
-import type { TaskStatus } from '@/constants/taskTypes';
+import type { BoardName } from '@/types/IComponents/IBoard';
 import { forwardRef } from 'react';
 import { DroppableBoardComponent } from './styled';
 
 interface DroppableBoardProps {
-  status: TaskStatus;
+  status: BoardName;
   children: React.ReactNode;
-  onDrop: (item: { taskId: number; fromStatus: TaskStatus }) => void;
+  onDrop: (item: { taskId: number; fromStatus: BoardName }) => void;
 }
 export const DroppableBoard = forwardRef<HTMLDivElement, DroppableBoardProps>(
   ({ children, onDrop }, ref) => {
