@@ -1,3 +1,4 @@
+import { useCallback } from 'react';
 import { ColorItem, ColorsList } from './styled';
 interface ColorPickerProps {
   onChange: (color: string) => void;
@@ -11,12 +12,19 @@ export const ColorPicker = ({ onChange }: ColorPickerProps) => {
     '#9D50BB',
     '#FF7F50',
   ];
+  const handleChange = useCallback(
+    (color: string) => () => {
+      onChange(color);
+    },
+    [onChange]
+  );
   return (
     <ColorsList>
       {colors.map((color) => (
         <ColorItem
+          key={color}
           $colorPick={color}
-          onClick={() => onChange(color)}
+          onClick={handleChange(color)}
         ></ColorItem>
       ))}
     </ColorsList>

@@ -1,6 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import tasksReducer from './taskSlice';
 import boardsReducer from './boardsSlice';
+import themeReducer from './themeSlice';
 import storage from 'redux-persist/es/storage';
 import { persistReducer, persistStore } from 'redux-persist';
 import { combineReducers } from 'redux';
@@ -8,11 +9,12 @@ import { combineReducers } from 'redux';
 const rootReducer = combineReducers({
   boards: boardsReducer,
   tasks: tasksReducer,
+  theme: themeReducer,
 });
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['boards', 'tasks'],
+  whitelist: ['boards', 'tasks', 'theme'],
 };
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 const store = configureStore({

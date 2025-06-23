@@ -10,9 +10,7 @@ createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        {/* <DndProvider backend={HTML5Backend}> */}
         <App />
-        {/* </DndProvider> */}
       </PersistGate>
     </Provider>
   </StrictMode>

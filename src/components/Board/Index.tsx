@@ -1,4 +1,4 @@
-import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { useAppDispatch, useAppSelector } from '@/hooks/hooks';
 import Tasks from '@/components/Tasks/Index';
 import { AddTask, AddTaskButton, BoardItem } from './styled';
 import type { TaskStatus } from '@/constants/taskTypes';

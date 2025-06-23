@@ -26,6 +26,7 @@ export const AddBoardButton = styled.button`
   height: 40px;
   border-radius: 50%;
   border: 1px solid #cbd5e1;
+  background-color: white;
   color: #475569;
   &::before,
   &::after {
