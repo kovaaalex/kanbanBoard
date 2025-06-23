@@ -11,7 +11,7 @@ import {
 import { useAppDispatch } from '@/hooks/hooks';
 import { dropBoard } from '@/store/boardsSlice';
 import { dropTaskStatus } from '@/store/taskSlice';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { ColorPicker } from '@/components/ColorPicker/Index';
 import type { BoardColumnProps } from '@/constants/boardTypes';
 export const BoardColumn = ({
@@ -35,6 +35,9 @@ export const BoardColumn = ({
     dispatch(dropTaskStatus(currentBoard));
     dispatch(dropBoard(boardId));
   };
+  const toggleColorPicker = useCallback(() => {
+    setShowColorPicker((prev) => !prev);
+  }, []);
   return (
     <Column $statusColor={color}>
       <TaskLength $statusColor={color}>{taskCount}</TaskLength>
@@ -46,7 +49,7 @@ export const BoardColumn = ({
         maxLength={25}
         onChange={onBoardChange}
       />
-      <ColorPickerButton onClick={() => setShowColorPicker(!showColorPicker)}>
+      <ColorPickerButton onClick={toggleColorPicker}>
         <FaPalette />
       </ColorPickerButton>
       {showColorPicker && (
