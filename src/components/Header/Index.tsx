@@ -6,11 +6,12 @@ import {
   HeaderComponent,
   HeaderWrapper,
 } from './styled';
-import { addCustomBoard } from '@/store/boardsSlice';
+import { addCustomBoard } from '@/store/slices/boardsSlice';
 import Hamburger from 'hamburger-react';
 import { useState } from 'react';
 import type { RootState } from '@/store/store';
 import { generateBoardName } from '@/utils/generateBoardName';
+import { initializeBoardTasks } from '@/store/slices/taskSlice';
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -19,6 +20,7 @@ const Header = () => {
   const handleAddBoard = () => {
     const defaultName = generateBoardName(boards.lastId);
     dispatch(addCustomBoard(defaultName));
+    dispatch(initializeBoardTasks(defaultName));
   };
   return (
     <HeaderComponent>

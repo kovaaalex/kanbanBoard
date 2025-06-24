@@ -9,20 +9,13 @@ import {
   TaskLength,
 } from './styled';
 import { useAppDispatch, useAppSelector } from '@/hooks/hooks';
-import { dropBoard } from '@/store/boardsSlice';
-import { dropTaskStatus } from '@/store/taskSlice';
+import { dropBoard } from '@/store/slices/boardsSlice';
+import { dropTaskStatus } from '@/store/slices/taskSlice';
 import { useCallback, useState } from 'react';
 import { ColorPicker } from '@/components/ColorPicker/Index';
-export interface BoardColumnProps {
-  color: string;
-  currentBoard: string;
-  showSave: boolean;
-  onBoardChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onSave: () => void;
-  onAddTask: () => void;
-  boardId: string;
-  onChangeColor: (color: string) => void;
-}
+import type { BoardColumnProps } from '@/types/IComponents/IBoardColumn';
+import { getColorStyles } from '@/utils/getBackgroundColor';
+import type { ColorKey } from '@/types/colorTypes';
 export const BoardColumn = ({
   color,
   currentBoard,
@@ -34,22 +27,30 @@ export const BoardColumn = ({
   onChangeColor,
 }: BoardColumnProps) => {
   const dispatch = useAppDispatch();
-  const tasks = useAppSelector((state) => state.tasks.tasks[currentBoard]);
+  const tasks = useAppSelector(
+    (state) => state.tasks.tasks[currentBoard] || []
+  );
   const [showColorPicker, setShowColorPicker] = useState(false);
-  const handleColorChange = (newColor: string) => {
-    onChangeColor(newColor);
-    setShowColorPicker(false);
-  };
-  const handleDelete = () => {
+  const columnColor = getColorStyles(color).textColor;
+  const handleColorChange = useCallback(
+    (newColor: ColorKey) => {
+      onChangeColor(newColor);
+      setShowColorPicker(false);
+    },
+    [onChangeColor]
+  );
+  const handleDelete = useCallback(() => {
     dispatch(dropTaskStatus(currentBoard));
     dispatch(dropBoard(boardId));
-  };
+  }, [boardId]);
+
   const toggleColorPicker = useCallback(() => {
     setShowColorPicker((prev) => !prev);
   }, []);
+
   return (
-    <Column $statusColor={color}>
-      <TaskLength $statusColor={color}>{tasks.length}</TaskLength>
+    <Column $statusColor={columnColor}>
+      <TaskLength $statusColor={columnColor}>{tasks.length}</TaskLength>
       <H4
         name={boardId}
         id={boardId}
@@ -61,9 +62,7 @@ export const BoardColumn = ({
       <ColorPickerButton onClick={toggleColorPicker}>
         <FaPalette />
       </ColorPickerButton>
-      {showColorPicker && (
-        <ColorPicker onChange={handleColorChange}></ColorPicker>
-      )}
+      {showColorPicker && <ColorPicker onChange={handleColorChange} />}
       <DeleteButton onClick={handleDelete}>
         <FaTrashAlt />
       </DeleteButton>

@@ -8,26 +8,24 @@ import {
   moveTask,
   initializeBoardTasks,
   renameTaskStatus,
-} from '@/store/taskSlice';
+} from '@/store/slices/taskSlice';
 import { DroppableBoard } from '@/components/DroppableBoard/Index';
 import { useEffect, useState } from 'react';
-import { changeBoardColor, renameBoard } from '@/store/boardsSlice';
+import { changeBoardColor, renameBoard } from '@/store/slices/boardsSlice';
 import { BoardColumn } from '../BoardColumn/Index';
+import { getColorStyles } from '@/utils/getBackgroundColor';
+import type { ColorKey } from '@/types/colorTypes';
+import { DEFAULT_TASK } from '@/constants/task';
 
 const Board = ({ item }: { item: IBoard }) => {
   const { id, name, color } = item;
   const dispatch = useAppDispatch();
   const [currentBoard, setBoard] = useState(name);
   const [showSave, setShowSave] = useState(false);
-  const [currentColor, setCurrentColor] = useState(color);
-
+  const [currentColor, setCurrentColor] = useState(color as ColorKey);
   useEffect(() => {
     dispatch(initializeBoardTasks(name));
   }, [name]);
-  const handleColorChange = (newColor: string) => {
-    setCurrentColor(newColor);
-    dispatch(changeBoardColor({ boardId: id, newColor }));
-  };
   const handleDrop = (
     item: { taskId: number; fromStatus: BoardName },
     toStatus: BoardName
@@ -42,25 +40,18 @@ const Board = ({ item }: { item: IBoard }) => {
       );
     }
   };
-
   const handleBoardChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setBoard(e.target.value);
     setShowSave(true);
   };
-
   const handleAddTask = () => {
     dispatch(
       addTask({
         status: name,
-        task: {
-          title: 'New Task',
-          description: '',
-          priority: 'Priority',
-        },
+        task: DEFAULT_TASK,
       })
     );
   };
-
   const handleSave = () => {
     if (currentBoard.trim() !== name && currentBoard.trim() !== '') {
       const newName = currentBoard.trim() as BoardName;
@@ -69,7 +60,10 @@ const Board = ({ item }: { item: IBoard }) => {
       setShowSave(false);
     }
   };
-
+  const handleColorChange = (newColor: ColorKey) => {
+    setCurrentColor(newColor);
+    dispatch(changeBoardColor({ boardId: id, newColor }));
+  };
   return (
     <BoardItem>
       <DroppableBoard status={name} onDrop={(item) => handleDrop(item, name)}>
@@ -85,7 +79,10 @@ const Board = ({ item }: { item: IBoard }) => {
         />
         <Tasks title={name} />
         <AddTask>
-          <AddTaskButton onClick={handleAddTask} $statusColor={currentColor}>
+          <AddTaskButton
+            onClick={handleAddTask}
+            $statusColor={getColorStyles(currentColor)}
+          >
             Add task...
           </AddTaskButton>
         </AddTask>

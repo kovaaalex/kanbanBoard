@@ -1,29 +1,23 @@
 import { useCallback } from 'react';
 import { ColorItem, ColorsList } from './styled';
+import type { ColorKey } from '@/types/colorTypes';
+import { boardColors, COLOR_KEYS } from '@/constants/colors';
 interface ColorPickerProps {
-  onChange: (color: string) => void;
+  onChange: (color: ColorKey) => void;
 }
 export const ColorPicker = ({ onChange }: ColorPickerProps) => {
-  const colors: string[] = [
-    '#4F46E5',
-    '#F59E0B',
-    '#22C55E',
-    '#DC2626',
-    '#9D50BB',
-    '#FF7F50',
-  ];
   const handleChange = useCallback(
-    (color: string) => () => {
+    (color: ColorKey) => () => {
       onChange(color);
     },
     [onChange]
   );
   return (
     <ColorsList>
-      {colors.map((color) => (
+      {COLOR_KEYS.map((color) => (
         <ColorItem
           key={color}
-          $colorPick={color}
+          $colorPick={boardColors[color as keyof typeof boardColors].textColor}
           onClick={handleChange(color)}
         ></ColorItem>
       ))}

@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
-import tasksReducer from './taskSlice';
-import boardsReducer from './boardsSlice';
-import themeReducer from './themeSlice';
+import tasksReducer from './slices/taskSlice';
+import boardsReducer from './slices/boardsSlice';
+import themeReducer from './slices/themeSlice';
 import storage from 'redux-persist/es/storage';
 import { persistReducer, persistStore } from 'redux-persist';
 import { combineReducers } from 'redux';
