@@ -1,5 +1,5 @@
 import { useAppDispatch } from '@/hooks/hooks';
-import Tasks from '@/components/Tasks';
+import Tasks from '@/components/Tasks/index';
 import { AddTask, AddTaskButton, BoardItem } from './styled';
 import type { BoardName } from '@/types/IComponents/IBoard';
 import { type IBoard } from '@/types/IComponents/IBoard';
@@ -15,8 +15,11 @@ import { BoardColumn } from '@/components/BoardColumn';
 import { getColorStyles } from '@/utils/getColorStyles';
 import type { ColorKey } from '@/types/colorTypes';
 import { DEFAULT_TASK } from '@/constants/task';
-import { DroppableBoard } from '../DroppableBoard';
-
+import { DroppableBoard } from '@/components/DroppableBoard/index';
+interface DropItem {
+  taskId: number;
+  fromStatus: string;
+}
 const Board = ({ item }: { item: IBoard }) => {
   const { id, name, color } = item;
   const dispatch = useAppDispatch();
@@ -66,7 +69,10 @@ const Board = ({ item }: { item: IBoard }) => {
   };
   return (
     <BoardItem>
-      <DroppableBoard status={name} onDrop={(item) => handleDrop(item, name)}>
+      <DroppableBoard
+        status={name}
+        onDrop={(item: DropItem) => handleDrop(item, name)}
+      >
         <BoardColumn
           color={currentColor}
           currentBoard={currentBoard}

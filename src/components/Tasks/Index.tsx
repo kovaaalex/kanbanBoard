@@ -1,5 +1,5 @@
 import { useAppSelector } from '@/hooks/hooks';
-import Task from '@/components/Task';
+import Task from '@/components/Task/index';
 import { TasksList } from './styled';
 import type { ITasksProps } from '@/types/IComponents/ITasks';
 
