@@ -4,3 +4,7 @@ export interface IBoard {
   name: BoardName;
   color: string;
 }
+export interface DropItem {
+  taskId: number;
+  fromStatus: string;
+}

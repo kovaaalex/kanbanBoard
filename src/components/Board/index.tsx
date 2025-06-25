@@ -1,7 +1,7 @@
 import { useAppDispatch } from '@/hooks/hooks';
 import Tasks from '@/components/Tasks/index';
 import { AddTask, AddTaskButton, BoardItem } from './styled';
-import type { BoardName } from '@/types/IComponents/IBoard';
+import type { BoardName, DropItem } from '@/types/IComponents/IBoard';
 import { type IBoard } from '@/types/IComponents/IBoard';
 import {
   addTask,
@@ -16,10 +16,7 @@ import { getColorStyles } from '@/utils/getColorStyles';
 import type { ColorKey } from '@/types/colorTypes';
 import { DEFAULT_TASK } from '@/constants/task';
 import { DroppableBoard } from '@/components/DroppableBoard/index';
-interface DropItem {
-  taskId: number;
-  fromStatus: string;
-}
+
 const Board = ({ item }: { item: IBoard }) => {
   const { id, name, color } = item;
   const dispatch = useAppDispatch();

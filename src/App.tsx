@@ -8,6 +8,7 @@ import { useAppSelector } from '@/hooks/hooks';
 import { useEffect } from 'react';
 import { ThemeButton } from '@/components/ThemeButton/index';
 import Header from '@/components/Header/index';
+import { FallbackComponent } from './components/FallbackComponent';
 
 const App = () => {
   const theme = useAppSelector((state) => state.theme.currentTheme);
@@ -15,9 +16,7 @@ const App = () => {
     document.documentElement.setAttribute('data-theme', theme);
   }, [theme]);
   return (
-    <ErrorBoundary
-      fallback={<p>Что-то пошло не так, перезапустите страницу</p>}
-    >
+    <ErrorBoundary fallback={<FallbackComponent />}>
       <Header />
       <KanbanBoard />
       <ThemeButton />

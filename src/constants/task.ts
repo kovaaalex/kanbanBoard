@@ -2,6 +2,6 @@ import type { TaskWithoutId } from '@/types/IStore/ITasksState';
 
 export const DEFAULT_TASK: TaskWithoutId = {
   title: 'New Task',
-  description: '',
+  description: 'Default description',
   priority: 'Priority',
 };
