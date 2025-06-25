@@ -15,7 +15,7 @@ import { useCallback, useState } from 'react';
 import type { BoardColumnProps } from '@/types/IComponents/IBoardColumn';
 import { getColorStyles } from '@/utils/getColorStyles';
 import type { ColorKey } from '@/types/colorTypes';
-import { ColorPicker } from '@/components/ColorPicker/index';
+import { ColorPicker } from '@/components/ColorPicker/Index';
 export const BoardColumn = ({
   color,
   currentBoard,
