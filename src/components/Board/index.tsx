@@ -1,5 +1,5 @@
 import { useAppDispatch } from '@/hooks/hooks';
-import Tasks from '@/components/Tasks/tasks';
+import Tasks from '@/components/Tasks/index';
 import { AddTask, AddTaskButton, BoardItem } from './styled';
 import type { BoardName } from '@/types/IComponents/IBoard';
 import { type IBoard } from '@/types/IComponents/IBoard';
@@ -11,11 +11,11 @@ import {
 } from '@/store/slices/taskSlice';
 import { useEffect, useState } from 'react';
 import { changeBoardColor, renameBoard } from '@/store/slices/boardsSlice';
-import { BoardColumn } from '@/components/BoardColumn/boardColumn';
+import { BoardColumn } from '@/components/BoardColumn/index';
 import { getColorStyles } from '@/utils/getColorStyles';
 import type { ColorKey } from '@/types/colorTypes';
 import { DEFAULT_TASK } from '@/constants/task';
-import { DroppableBoard } from '@/components/DroppableBoard/droppableBoard';
+import { DroppableBoard } from '@/components/DroppableBoard/index';
 interface DropItem {
   taskId: number;
   fromStatus: string;
