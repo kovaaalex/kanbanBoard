@@ -6,6 +6,7 @@ export interface TaskItem {
   title: string;
   description: string;
 }
+export type TaskWithoutId = Omit<TaskItem, 'id'>;
 export interface TasksState {
   tasks: Record<BoardName, TaskItem[]>;
   lastId: number;

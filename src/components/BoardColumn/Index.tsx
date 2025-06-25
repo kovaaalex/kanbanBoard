@@ -12,10 +12,10 @@ import { useAppDispatch, useAppSelector } from '@/hooks/hooks';
 import { dropBoard } from '@/store/slices/boardsSlice';
 import { dropTaskStatus } from '@/store/slices/taskSlice';
 import { useCallback, useState } from 'react';
-import { ColorPicker } from '@/components/ColorPicker/Index';
 import type { BoardColumnProps } from '@/types/IComponents/IBoardColumn';
-import { getColorStyles } from '@/utils/getBackgroundColor';
+import { getColorStyles } from '@/utils/getColorStyles';
 import type { ColorKey } from '@/types/colorTypes';
+import { ColorPicker } from '../ColorPicker';
 export const BoardColumn = ({
   color,
   currentBoard,

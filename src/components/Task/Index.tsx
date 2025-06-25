@@ -5,7 +5,7 @@ import {
   DeleteButton,
   SaveButton,
 } from './styled';
-import Priority from '@/components/Priority/Index';
+import Priority from '@/components/Priority';
 import { useEffect, useRef, useState } from 'react';
 import { deleteTask, updateTask } from '@/store/slices/taskSlice';
 import { FaTrashAlt } from 'react-icons/fa';
