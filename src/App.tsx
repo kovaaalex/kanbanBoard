@@ -2,12 +2,12 @@ import '@fontsource/plus-jakarta-sans/400.css';
 import '@fontsource/plus-jakarta-sans/700.css';
 import '@fontsource/plus-jakarta-sans/800.css';
 import './App.css';
-import KanbanBoard from '@/components/KanbanBoard/Index';
+import KanbanBoard from '@/components/KanbanBoard/kanbanBoard';
 import ErrorBoundary from '@/components/ErrorBoundary';
 import { useAppSelector } from '@/hooks/hooks';
 import { useEffect } from 'react';
-import { ThemeButton } from '@/components/ThemeButton/Index';
-import Header from '@/components/Header/Index';
+import { ThemeButton } from '@/components/ThemeButton/themeButton';
+import Header from '@/components/Header/header';
 
 const App = () => {
   const theme = useAppSelector((state) => state.theme.currentTheme);

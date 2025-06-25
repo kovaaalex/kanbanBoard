@@ -1,5 +1,5 @@
 import { useAppDispatch } from '@/hooks/hooks';
-import Tasks from '@/components/Tasks/Index';
+import Tasks from '@/components/Tasks/tasks';
 import { AddTask, AddTaskButton, BoardItem } from './styled';
 import type { BoardName } from '@/types/IComponents/IBoard';
 import { type IBoard } from '@/types/IComponents/IBoard';
