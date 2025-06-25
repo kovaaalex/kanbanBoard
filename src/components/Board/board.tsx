@@ -11,11 +11,11 @@ import {
 } from '@/store/slices/taskSlice';
 import { useEffect, useState } from 'react';
 import { changeBoardColor, renameBoard } from '@/store/slices/boardsSlice';
-import { BoardColumn } from '@/components/BoardColumn/Index';
+import { BoardColumn } from '@/components/BoardColumn/boardColumn';
 import { getColorStyles } from '@/utils/getColorStyles';
 import type { ColorKey } from '@/types/colorTypes';
 import { DEFAULT_TASK } from '@/constants/task';
-import { DroppableBoard } from '@/components/DroppableBoard/Index';
+import { DroppableBoard } from '@/components/DroppableBoard/droppableBoard';
 interface DropItem {
   taskId: number;
   fromStatus: string;
