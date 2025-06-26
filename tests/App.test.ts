@@ -1,22 +1,33 @@
-// import { getBackgroundColor } from '../src/utils/getBackgroundColor';
+import { getColorStyles } from '../src/utils/getColorStyles';
 import { generateBoardName } from '../src/utils/generateBoardName';
-// describe('Color', function () {
-//   it('Should return correct background', () => {
-//     expect(getBackgroundColor('#4F46E5')).toBe('#EEF2FF');
-//     expect(getBackgroundColor('#F59E0B')).toBe('#FFFBEB');
-//     expect(getBackgroundColor('#22C55E')).toBe('#F0FDF4');
-//     expect(getBackgroundColor('#DC2626')).toBe('#FEE2E2');
-//     expect(getBackgroundColor('#9D50BB')).toBe('#DC52F9');
-//     expect(getBackgroundColor('#FF7F50')).toBe('#EEFABD');
-//   });
-//   it('Should handle unknown colors', () => {
-//     expect(getBackgroundColor('blue')).toBe('blue');
-//     expect(getBackgroundColor('#123456')).toBe('#123456');
-//   });
-//   it('Should return default for undefined/null', () => {
-//     expect(getBackgroundColor()).toBe('#FEE2E2');
-//   });
-// });
+describe('Color Styles', function () {
+  it('Should return correct styles for known colors', () => {
+    expect(getColorStyles('blue')).toEqual({
+      textColor: '#4F46E5',
+      bgColor: '#EEF2FF',
+    });
+    expect(getColorStyles('orange')).toEqual({
+      textColor: '#F59E0B',
+      bgColor: '#FFFBEB',
+    });
+    expect(getColorStyles('green')).toEqual({
+      textColor: '#22C55E',
+      bgColor: '#F0FDF4',
+    });
+    expect(getColorStyles('red')).toEqual({
+      textColor: '#DC2626',
+      bgColor: '#FEE2E2',
+    });
+    expect(getColorStyles('purple')).toEqual({
+      textColor: '#9D50BB',
+      bgColor: '#DC52F9',
+    });
+    expect(getColorStyles('yellow')).toEqual({
+      textColor: '#FF7F50',
+      bgColor: '#EEFABD',
+    });
+  });
+});
 describe('BoardName', function () {
   it('Should return board name', () => {
     expect(generateBoardName(5)).toBe('Board5');
