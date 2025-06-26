@@ -4,6 +4,8 @@ import {
   TaskDescription,
   DeleteButton,
   SaveButton,
+  DateInput,
+  DateOutput,
 } from './styled';
 import Priority from '@/components/Priority/index';
 import { useEffect, useRef, useState } from 'react';
@@ -12,16 +14,28 @@ import { FaTrashAlt } from 'react-icons/fa';
 import type { Priorities } from '@/types/IComponents/IPriorities';
 import type { TaskProps } from '@/types/IComponents/ITask';
 import { useAppDispatch } from '@/hooks/hooks';
+
 const Task = ({ task, status, onPriorityChange }: TaskProps) => {
-  const { id, title, description, priority } = task;
+  const { id, title, description, priority, deadline } = task;
   const dispatch = useAppDispatch();
   const [currentTitle, setTitle] = useState(title);
   const [currentDescription, setDescription] = useState(description);
   const [showSave, setShowSave] = useState(false);
   const [currentPriority, setCurrentPriority] = useState(priority);
+  const [currentDeadline, setCurrentDeadline] = useState<Date | null>(
+    deadline ? new Date(deadline) : null
+  );
   const titleRef = useRef<HTMLTextAreaElement>(null);
   const descriptionRef = useRef<HTMLTextAreaElement>(null);
-
+  const isDeadlinePassed = currentDeadline
+    ? currentDeadline < new Date()
+    : false;
+  const autoHeight = (element: HTMLTextAreaElement | null) => {
+    if (element) {
+      element.style.height = 'auto';
+      element.style.height = `${element.scrollHeight}px`;
+    }
+  };
   const handleDragStart = (e: React.DragEvent) => {
     e.dataTransfer.setData(
       'application/json',
@@ -29,16 +43,18 @@ const Task = ({ task, status, onPriorityChange }: TaskProps) => {
     );
     e.dataTransfer.effectAllowed = 'move';
   };
-  const autoHeight = (element: HTMLTextAreaElement | null) => {
-    if (element) {
-      element.style.height = `${element.scrollHeight}px`;
-    }
-  };
   const handleDelete = () => {
     dispatch(deleteTask({ status, id }));
   };
   const handleTitleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setTitle(e.target.value);
+    autoHeight(e.target);
+    setShowSave(true);
+  };
+  const handleDescriptionChange = (
+    e: React.ChangeEvent<HTMLTextAreaElement>
+  ) => {
+    setDescription(e.target.value);
     autoHeight(e.target);
     setShowSave(true);
   };
@@ -49,7 +65,11 @@ const Task = ({ task, status, onPriorityChange }: TaskProps) => {
       onPriorityChange(newPriority);
     }
   };
-
+  const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newDate = e.target.value ? new Date(e.target.value) : null;
+    setCurrentDeadline(newDate);
+    setShowSave(true);
+  };
   const handleSave = () => {
     dispatch(
       updateTask({
@@ -59,24 +79,26 @@ const Task = ({ task, status, onPriorityChange }: TaskProps) => {
           title: currentTitle,
           description: currentDescription,
           priority: currentPriority,
+          deadline: currentDeadline?.toISOString() || null,
         },
       })
     );
     setShowSave(false);
   };
-  const handleDescriptionChange = (
-    e: React.ChangeEvent<HTMLTextAreaElement>
-  ) => {
-    setDescription(e.target.value);
-    autoHeight(e.target);
-    setShowSave(true);
+  const getDateInputValue = () => {
+    if (!currentDeadline) return '';
+    return currentDeadline.toISOString().split('T')[0];
   };
   useEffect(() => {
     autoHeight(titleRef.current);
     autoHeight(descriptionRef.current);
   }, []);
   return (
-    <TaskSection draggable onDragStart={handleDragStart}>
+    <TaskSection
+      draggable
+      onDragStart={handleDragStart}
+      $isOverdue={isDeadlinePassed}
+    >
       <Priority priority={priority} onChange={handlePriorityChange} />
       <TaskTitle
         ref={titleRef}
@@ -93,6 +115,14 @@ const Task = ({ task, status, onPriorityChange }: TaskProps) => {
         maxLength={300}
         onChange={handleDescriptionChange}
         rows={1}
+      />
+      {currentDeadline ? (
+        <DateOutput>{currentDeadline.toLocaleDateString()}</DateOutput>
+      ) : null}
+      <DateInput
+        type="date"
+        value={getDateInputValue()}
+        onChange={handleDateChange}
       />
       <DeleteButton onClick={handleDelete}>
         <FaTrashAlt />

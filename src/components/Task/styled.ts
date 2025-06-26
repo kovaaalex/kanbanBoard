@@ -1,15 +1,16 @@
 import styled from 'styled-components';
-
-export const TaskSection = styled.section`
+interface TaskSectionProps {
+  $isOverdue?: boolean;
+}
+export const TaskSection = styled.section<TaskSectionProps>`
   position: relative;
   padding: 12px;
   border-radius: 24px;
-  border: 1px solid #e2e8f0;
+  border: 1px solid ${(props) => (props.$isOverdue ? '#ff4d4f' : '#e2e8f0')};
   max-width: 300px;
   background-color: #fff;
   cursor: grab;
 `;
-
 export const TaskTitle = styled.textarea`
   margin: 12px 0 8px 0;
   font-family: inherit;
@@ -48,5 +49,18 @@ export const SaveButton = styled.button`
   background: none;
   padding: 0;
   margin-top: 16px;
+  color: #475569;
+`;
+export const DateInput = styled.input`
+  position: absolute;
+  top: 12px;
+  right: 30px;
+  border: none;
+  color: white;
+  &::-webkit-datetime-edit {
+    display: none;
+  }
+`;
+export const DateOutput = styled.p`
   color: #475569;
 `;

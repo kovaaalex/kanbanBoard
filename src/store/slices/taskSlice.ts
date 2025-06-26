@@ -101,6 +101,22 @@ const tasksSlice = createSlice({
         delete state.tasks[statusToRemove];
       }
     },
+    changeDeadline: (
+      state,
+      action: PayloadAction<{
+        status: BoardName;
+        id: number;
+        newDeadline: string;
+      }>
+    ) => {
+      const { status, id, newDeadline } = action.payload;
+      const taskIndex = state.tasks[status].findIndex(
+        (task) => task.id === task.id
+      );
+      if (taskIndex !== -1) {
+        state.tasks[status][id].deadline = newDeadline;
+      }
+    },
   },
 });
 export const {
@@ -112,5 +128,6 @@ export const {
   initializeBoardTasks,
   renameTaskStatus,
   dropTaskStatus,
+  changeDeadline,
 } = tasksSlice.actions;
 export default tasksSlice.reducer;
