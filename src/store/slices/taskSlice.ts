@@ -1,7 +1,14 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
-import type { TaskItem, TaskStatus, TasksState } from '@/constants/taskTypes';
-import { initialTasksState } from '@/constants/taskTypes';
-
+import type { BoardName } from '@/types/IComponents/IBoard';
+import type { TaskItem, TasksState } from '@/types/IStore/ITasksState';
+export const initialTasksState: TasksState = {
+  tasks: {
+    'To Do': [],
+    'In Progress': [],
+    Done: [],
+  },
+  lastId: 0,
+};
 const tasksSlice = createSlice({
   name: 'tasks',
   initialState: initialTasksState,
@@ -13,7 +20,7 @@ const tasksSlice = createSlice({
     addTask: (
       state,
       action: PayloadAction<{
-        status: TaskStatus;
+        status: BoardName;
         task: Omit<TaskItem, 'id'>;
       }>
     ) => {
@@ -29,7 +36,7 @@ const tasksSlice = createSlice({
     deleteTask: (
       state,
       action: PayloadAction<{
-        status: TaskStatus;
+        status: BoardName;
         id: number;
       }>
     ) => {
@@ -42,8 +49,8 @@ const tasksSlice = createSlice({
       state,
       action: PayloadAction<{
         taskId: number;
-        fromStatus: TaskStatus;
-        toStatus: TaskStatus;
+        fromStatus: BoardName;
+        toStatus: BoardName;
       }>
     ) => {
       const { taskId, fromStatus, toStatus } = action.payload;
@@ -58,7 +65,7 @@ const tasksSlice = createSlice({
     updateTask: (
       state,
       action: PayloadAction<{
-        status: TaskStatus;
+        status: BoardName;
         id: number;
         updates: Partial<Omit<TaskItem, 'id' | 'status'>>;
       }>
@@ -80,7 +87,7 @@ const tasksSlice = createSlice({
     },
     renameTaskStatus: (
       state,
-      action: PayloadAction<{ oldStatus: TaskStatus; newStatus: TaskStatus }>
+      action: PayloadAction<{ oldStatus: BoardName; newStatus: BoardName }>
     ) => {
       const { oldStatus, newStatus } = action.payload;
       if (state.tasks[oldStatus]) {

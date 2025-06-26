@@ -1,41 +1,34 @@
-import { useAppDispatch, useAppSelector } from '@/hooks/hooks';
-import Tasks from '@/components/Tasks/Index';
+import { useAppDispatch } from '@/hooks/hooks';
+import Tasks from '@/components/Tasks/index';
 import { AddTask, AddTaskButton, BoardItem } from './styled';
-import type { TaskStatus } from '@/constants/taskTypes';
-import { type IBoard } from '@/constants/boardTypes';
+import type { BoardName, DropItem } from '@/types/IComponents/IBoard';
+import { type IBoard } from '@/types/IComponents/IBoard';
 import {
   addTask,
   moveTask,
   initializeBoardTasks,
   renameTaskStatus,
-} from '@/store/taskSlice';
-import { DroppableBoard } from '@/components/DroppableBoard/Index';
+} from '@/store/slices/taskSlice';
 import { useEffect, useState } from 'react';
-import { changeBoardColor, renameBoard } from '@/store/boardsSlice';
-import { BoardColumn } from '../BoardColumn/Index';
+import { changeBoardColor, renameBoard } from '@/store/slices/boardsSlice';
+import { BoardColumn } from '@/components/BoardColumn/index';
+import { getColorStyles } from '@/utils/getColorStyles';
+import type { ColorKey } from '@/types/colorTypes';
+import { DEFAULT_TASK } from '@/constants/task';
+import { DroppableBoard } from '@/components/DroppableBoard/index';
 
 const Board = ({ item }: { item: IBoard }) => {
   const { id, name, color } = item;
   const dispatch = useAppDispatch();
   const [currentBoard, setBoard] = useState(name);
   const [showSave, setShowSave] = useState(false);
-  const [currentColor, setCurrentColor] = useState(color);
-
-  const { tasks } = useAppSelector((state) => ({
-    tasks: state.tasks.tasks[name] || [],
-    boards: state.boards.boards,
-  }));
-
+  const [currentColor, setCurrentColor] = useState(color as ColorKey);
   useEffect(() => {
     dispatch(initializeBoardTasks(name));
-  }, [name, dispatch]);
-  const handleColorChange = (newColor: string) => {
-    setCurrentColor(newColor);
-    dispatch(changeBoardColor({ boardId: id, newColor }));
-  };
+  }, [name]);
   const handleDrop = (
-    item: { taskId: number; fromStatus: TaskStatus },
-    toStatus: TaskStatus
+    item: { taskId: number; fromStatus: BoardName },
+    toStatus: BoardName
   ) => {
     if (item.fromStatus !== toStatus) {
       dispatch(
@@ -47,51 +40,52 @@ const Board = ({ item }: { item: IBoard }) => {
       );
     }
   };
-
   const handleBoardChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setBoard(e.target.value);
     setShowSave(true);
   };
-
   const handleAddTask = () => {
     dispatch(
       addTask({
         status: name,
-        task: {
-          title: 'New Task',
-          description: '',
-          priority: 'Priority',
-        },
+        task: DEFAULT_TASK,
       })
     );
   };
-
   const handleSave = () => {
     if (currentBoard.trim() !== name && currentBoard.trim() !== '') {
-      const newName = currentBoard.trim() as TaskStatus;
+      const newName = currentBoard.trim() as BoardName;
       dispatch(renameBoard({ oldName: name, newName }));
       dispatch(renameTaskStatus({ oldStatus: name, newStatus: newName }));
       setShowSave(false);
     }
   };
-
+  const handleColorChange = (newColor: ColorKey) => {
+    setCurrentColor(newColor);
+    dispatch(changeBoardColor({ boardId: id, newColor }));
+  };
   return (
     <BoardItem>
-      <DroppableBoard status={name} onDrop={(item) => handleDrop(item, name)}>
+      <DroppableBoard
+        status={name}
+        onDrop={(item: DropItem) => handleDrop(item, name)}
+      >
         <BoardColumn
           color={currentColor}
           currentBoard={currentBoard}
           showSave={showSave}
-          taskCount={tasks.length}
           onBoardChange={handleBoardChange}
           onSave={handleSave}
           onAddTask={handleAddTask}
           boardId={id}
           onChangeColor={handleColorChange}
         />
-        <Tasks title={name} tasks={tasks} />
+        <Tasks title={name} />
         <AddTask>
-          <AddTaskButton onClick={handleAddTask} $statusColor={currentColor}>
+          <AddTaskButton
+            onClick={handleAddTask}
+            $statusColor={getColorStyles(currentColor)}
+          >
             Add task...
           </AddTaskButton>
         </AddTask>

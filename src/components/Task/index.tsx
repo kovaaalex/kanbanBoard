@@ -5,15 +5,16 @@ import {
   DeleteButton,
   SaveButton,
 } from './styled';
-import Priority from '@/components/Priority/Index';
+import Priority from '@/components/Priority/index';
 import { useEffect, useRef, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { deleteTask, updateTask } from '@/store/taskSlice';
+import { deleteTask, updateTask } from '@/store/slices/taskSlice';
 import { FaTrashAlt } from 'react-icons/fa';
-import type { Priorities, TaskProps } from '@/constants/taskTypes';
+import type { Priorities } from '@/types/IComponents/IPriorities';
+import type { TaskProps } from '@/types/IComponents/ITask';
+import { useAppDispatch } from '@/hooks/hooks';
 const Task = ({ task, status, onPriorityChange }: TaskProps) => {
   const { id, title, description, priority } = task;
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [currentTitle, setTitle] = useState(title);
   const [currentDescription, setDescription] = useState(description);
   const [showSave, setShowSave] = useState(false);

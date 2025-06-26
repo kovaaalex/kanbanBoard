@@ -1,14 +1,9 @@
-import type { TaskItem } from '@/constants/taskTypes';
 import { useAppSelector } from '@/hooks/hooks';
-import Task from '@/components/Task/Index';
+import Task from '@/components/Task/index';
 import { TasksList } from './styled';
+import type { ITasksProps } from '@/types/IComponents/ITasks';
 
-interface TaskProps {
-  title: 'To Do' | 'In Progress' | 'Done' | string;
-  tasks: TaskItem[];
-}
-
-const Tasks = ({ title }: TaskProps) => {
+const Tasks = ({ title }: ITasksProps) => {
   const tasks = useAppSelector((state) => state.tasks.tasks[title]);
   if (!tasks?.length) {
     return null;

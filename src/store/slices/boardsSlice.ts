@@ -1,6 +1,13 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
-import { initialBoardState } from '@/constants/boardTypes';
-
+import type { BoardsState } from '@/types/IStore/IBoardState';
+export const initialBoardState: BoardsState = {
+  boards: [
+    { id: '1', name: 'To Do', color: 'blue' },
+    { id: '2', name: 'In Progress', color: 'orange' },
+    { id: '3', name: 'Done', color: 'green' },
+  ],
+  lastId: 3,
+};
 export const boardsSlice = createSlice({
   name: 'boards',
   initialState: initialBoardState,
@@ -16,7 +23,7 @@ export const boardsSlice = createSlice({
         state.boards.push({
           id: newId,
           name: newBoardName,
-          color: '#DC2626',
+          color: 'red',
         });
         state.lastId += 1;
       }
