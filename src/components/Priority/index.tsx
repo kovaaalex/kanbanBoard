@@ -1,8 +1,8 @@
 import type { IPriority, Priorities } from '@/types/IComponents/IPriorities';
 import { PriorityContainer, PriorityItem, PriorityList } from './styled';
 import { useState, useEffect } from 'react';
+import { priorityItems } from '@/constants/priorities';
 
-const priorityItems: Priorities[] = ['Low', 'Medium', 'High', 'Priority'];
 const Priority = ({ priority = 'Priority', onChange }: IPriority) => {
   const [isOpen, setIsOpen] = useState(false);
   const [currentPriority, setCurrentPriority] = useState<Priorities>(priority);
@@ -11,7 +11,7 @@ const Priority = ({ priority = 'Priority', onChange }: IPriority) => {
     const handleClickOutside = () => {
       if (isOpen) setIsOpen(false);
     };
-    //убрать в отдельный хук
+    //убрать в отдельный хук???
     document.addEventListener('click', handleClickOutside);
     return () => document.removeEventListener('click', handleClickOutside);
   }, [isOpen]);

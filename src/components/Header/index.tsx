@@ -1,4 +1,3 @@
-import { useDispatch, useSelector } from 'react-redux';
 import {
   AddBoardButton,
   H2,
@@ -12,10 +11,11 @@ import { useState } from 'react';
 import type { RootState } from '@/store/store';
 import { generateBoardName } from '@/utils/generateBoardName';
 import { initializeBoardTasks } from '@/store/slices/taskSlice';
+import { useAppDispatch, useAppSelector } from '@/hooks/hooks';
 
 const Header = () => {
-  const dispatch = useDispatch();
-  const boards = useSelector((state: RootState) => state.boards);
+  const dispatch = useAppDispatch();
+  const boards = useAppSelector((state: RootState) => state.boards);
   const [isOpen, setOpen] = useState(false);
   const handleAddBoard = () => {
     const defaultName = generateBoardName(boards.lastId);

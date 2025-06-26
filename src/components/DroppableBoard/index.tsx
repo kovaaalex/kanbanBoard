@@ -1,12 +1,7 @@
-import type { BoardName } from '@/types/IComponents/IBoard';
 import { forwardRef } from 'react';
 import { DroppableBoardComponent } from './styled';
+import type { DroppableBoardProps } from '@/types/IComponents/IDroppableBoard';
 
-interface DroppableBoardProps {
-  status: BoardName;
-  children: React.ReactNode;
-  onDrop: (item: { taskId: number; fromStatus: BoardName }) => void;
-}
 export const DroppableBoard = forwardRef<HTMLDivElement, DroppableBoardProps>(
   ({ children, onDrop }, ref) => {
     const handleDragOver = (e: React.DragEvent) => {
