@@ -20,6 +20,8 @@
     "@types/styled-components": "^5.1.34",
     "hamburger-react": "^2.5.2",
     "react": "^19.1.0",
+    "react-calendar-icon": "^0.10.0",
+    "react-datepicker": "^8.4.0",
     "react-dnd": "^16.0.1",
     "react-dnd-html5-backend": "^16.0.1",
     "react-dom": "^19.1.0",

@@ -5,6 +5,7 @@ export interface TaskItem {
   priority: Priorities;
   title: string;
   description: string;
+  deadline: string | null;
 }
 export type TaskWithoutId = Omit<TaskItem, 'id'>;
 export interface TasksState {
