@@ -1,7 +1,10 @@
-import { KanbanContainer } from './styled';
-import type { RootState } from '@/store/store';
-import Board from '@/components/Board/index';
 import { useAppSelector } from '@/hooks/hooks';
+
+import Board from '@/components/Board/index';
+import type { RootState } from '@/store/store';
+
+import { KanbanContainer } from './styled';
+
 const KanbanBoard = () => {
   const activeBoards = useAppSelector(
     (state: RootState) => state.boards.boards

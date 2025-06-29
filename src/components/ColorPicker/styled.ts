@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+
 export const ColorsList = styled.ul`
   position: absolute;
   background-color: white;

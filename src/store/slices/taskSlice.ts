@@ -1,6 +1,8 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
+
 import type { BoardName } from '@/types/IComponents/IBoard';
 import type { TaskItem, TasksState } from '@/types/IStore/ITasksState';
+
 export const initialTasksState: TasksState = {
   tasks: {
     'To Do': [],

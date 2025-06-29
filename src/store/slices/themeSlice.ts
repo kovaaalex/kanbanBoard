@@ -1,5 +1,6 @@
-import type { ThemeState } from '@/types/IStore/IThemeState';
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
+
+import type { ThemeState } from '@/types/IStore/IThemeState';
 
 const initialState: ThemeState = {
   currentTheme: 'light',

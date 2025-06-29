@@ -1,7 +1,9 @@
 import { useAppSelector } from '@/hooks/hooks';
+
 import Task from '@/components/Task/index';
-import { TasksList } from './styled';
 import type { ITasksProps } from '@/types/IComponents/ITasks';
+
+import { TasksList } from './styled';
 
 const Tasks = ({ title }: ITasksProps) => {
   const tasks = useAppSelector((state) => state.tasks.tasks[title]);

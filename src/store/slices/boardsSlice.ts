@@ -1,5 +1,7 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
+
 import type { BoardsState } from '@/types/IStore/IBoardState';
+
 export const initialBoardState: BoardsState = {
   boards: [
     { id: '1', name: 'To Do', color: 'blue' },

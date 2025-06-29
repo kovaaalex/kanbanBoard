@@ -1,4 +1,5 @@
 import type { ColorKey } from '@/types/colorTypes';
+
 export const boardColors = {
   blue: {
     textColor: '#4F46E5',

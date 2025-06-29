@@ -1,3 +1,14 @@
+import Hamburger from 'hamburger-react';
+
+import { useState } from 'react';
+
+import { useAppDispatch, useAppSelector } from '@/hooks/hooks';
+
+import { addCustomBoard } from '@/store/slices/boardsSlice';
+import { initializeBoardTasks } from '@/store/slices/taskSlice';
+import type { RootState } from '@/store/store';
+import { generateBoardName } from '@/utils/generateBoardName';
+
 import {
   AddBoardButton,
   H2,
@@ -5,13 +16,6 @@ import {
   HeaderComponent,
   HeaderWrapper,
 } from './styled';
-import { addCustomBoard } from '@/store/slices/boardsSlice';
-import Hamburger from 'hamburger-react';
-import { useState } from 'react';
-import type { RootState } from '@/store/store';
-import { generateBoardName } from '@/utils/generateBoardName';
-import { initializeBoardTasks } from '@/store/slices/taskSlice';
-import { useAppDispatch, useAppSelector } from '@/hooks/hooks';
 
 const Header = () => {
   const dispatch = useAppDispatch();

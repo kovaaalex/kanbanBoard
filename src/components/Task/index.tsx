@@ -1,19 +1,24 @@
-import {
-  TaskSection,
-  TaskTitle,
-  TaskDescription,
-  DeleteButton,
-  SaveButton,
-  DateInput,
-  DateOutput,
-} from './styled';
-import Priority from '@/components/Priority/index';
-import { useEffect, useRef, useState } from 'react';
-import { deleteTask, updateTask } from '@/store/slices/taskSlice';
 import { FaTrashAlt } from 'react-icons/fa';
+
+import { useEffect, useRef, useState } from 'react';
+
+import { useAppDispatch } from '@/hooks/hooks';
+
+import Priority from '@/components/Priority/index';
+import { deleteTask, updateTask } from '@/store/slices/taskSlice';
 import type { Priorities } from '@/types/IComponents/IPriorities';
 import type { TaskProps } from '@/types/IComponents/ITask';
-import { useAppDispatch } from '@/hooks/hooks';
+import { isDeadlinePassed } from '@/utils/isDeadlinePassed';
+
+import {
+  DateInput,
+  DateOutput,
+  DeleteButton,
+  SaveButton,
+  TaskDescription,
+  TaskSection,
+  TaskTitle,
+} from './styled';
 
 const Task = ({ task, status, onPriorityChange }: TaskProps) => {
   const { id, title, description, priority, deadline } = task;
@@ -27,9 +32,7 @@ const Task = ({ task, status, onPriorityChange }: TaskProps) => {
   );
   const titleRef = useRef<HTMLTextAreaElement>(null);
   const descriptionRef = useRef<HTMLTextAreaElement>(null);
-  const isDeadlinePassed = currentDeadline
-    ? currentDeadline < new Date()
-    : false;
+  const isPassed = isDeadlinePassed(currentDeadline);
   const autoHeight = (element: HTMLTextAreaElement | null) => {
     if (element) {
       element.style.height = 'auto';
@@ -94,11 +97,7 @@ const Task = ({ task, status, onPriorityChange }: TaskProps) => {
     autoHeight(descriptionRef.current);
   }, []);
   return (
-    <TaskSection
-      draggable
-      onDragStart={handleDragStart}
-      $isOverdue={isDeadlinePassed}
-    >
+    <TaskSection draggable onDragStart={handleDragStart} $isOverdue={isPassed}>
       <Priority priority={priority} onChange={handlePriorityChange} />
       <TaskTitle
         ref={titleRef}

@@ -1,4 +1,16 @@
 import { FaPalette, FaTrashAlt } from 'react-icons/fa';
+
+import { useCallback, useState } from 'react';
+
+import { useAppDispatch, useAppSelector } from '@/hooks/hooks';
+
+import { ColorPicker } from '@/components/ColorPicker/index';
+import { dropBoard } from '@/store/slices/boardsSlice';
+import { dropTaskStatus } from '@/store/slices/taskSlice';
+import type { ColorKey } from '@/types/colorTypes';
+import type { BoardColumnProps } from '@/types/IComponents/IBoardColumn';
+import { getColorStyles } from '@/utils/getColorStyles';
+
 import {
   ColorPickerButton,
   Column,
@@ -8,14 +20,7 @@ import {
   SaveButton,
   TaskLength,
 } from './styled';
-import { useAppDispatch, useAppSelector } from '@/hooks/hooks';
-import { dropBoard } from '@/store/slices/boardsSlice';
-import { dropTaskStatus } from '@/store/slices/taskSlice';
-import { useCallback, useState } from 'react';
-import type { BoardColumnProps } from '@/types/IComponents/IBoardColumn';
-import { getColorStyles } from '@/utils/getColorStyles';
-import type { ColorKey } from '@/types/colorTypes';
-import { ColorPicker } from '@/components/ColorPicker/index';
+
 export const BoardColumn = ({
   color,
   currentBoard,

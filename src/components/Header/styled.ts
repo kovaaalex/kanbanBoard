@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+
 export const HeaderComponent = styled.header`
   position: relative;
   padding: 32px;

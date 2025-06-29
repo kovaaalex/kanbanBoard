@@ -1,10 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
-import tasksReducer from './slices/taskSlice';
-import boardsReducer from './slices/boardsSlice';
-import themeReducer from './slices/themeSlice';
-import storage from 'redux-persist/es/storage';
-import { persistReducer, persistStore } from 'redux-persist';
 import { combineReducers } from 'redux';
+import { persistReducer, persistStore } from 'redux-persist';
+import storage from 'redux-persist/es/storage';
+
+import boardsReducer from './slices/boardsSlice';
+import tasksReducer from './slices/taskSlice';
+import themeReducer from './slices/themeSlice';
 
 const rootReducer = combineReducers({
   boards: boardsReducer,

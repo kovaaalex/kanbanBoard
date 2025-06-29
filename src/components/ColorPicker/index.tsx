@@ -1,8 +1,10 @@
 import { useCallback } from 'react';
-import { ColorItem, ColorsList } from './styled';
-import type { ColorKey } from '@/types/colorTypes';
+
 import { boardColors, COLOR_KEYS } from '@/constants/colors';
+import type { ColorKey } from '@/types/colorTypes';
 import type { ColorPickerProps } from '@/types/IComponents/IColorPicker';
+
+import { ColorItem, ColorsList } from './styled';
 
 export const ColorPicker = ({ onChange }: ColorPickerProps) => {
   const handleChange = useCallback(
