@@ -1,4 +1,5 @@
 import { FallBackComponent } from './styled';
+
 export const FallbackComponent = () => {
   return (
     <FallBackComponent>

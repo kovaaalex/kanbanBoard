@@ -1,6 +1,8 @@
 import { forwardRef } from 'react';
-import { DroppableBoardComponent } from './styled';
+
 import type { DroppableBoardProps } from '@/types/IComponents/IDroppableBoard';
+
+import { DroppableBoardComponent } from './styled';
 
 export const DroppableBoard = forwardRef<HTMLDivElement, DroppableBoardProps>(
   ({ children, onDrop }, ref) => {

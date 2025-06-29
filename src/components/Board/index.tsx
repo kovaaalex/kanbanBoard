@@ -1,21 +1,24 @@
+import { useEffect, useState } from 'react';
+
 import { useAppDispatch } from '@/hooks/hooks';
+
+import { BoardColumn } from '@/components/BoardColumn/index';
+import { DroppableBoard } from '@/components/DroppableBoard/index';
 import Tasks from '@/components/Tasks/index';
-import { AddTask, AddTaskButton, BoardItem } from './styled';
-import type { BoardName, DropItem } from '@/types/IComponents/IBoard';
-import { type IBoard } from '@/types/IComponents/IBoard';
+import { DEFAULT_TASK } from '@/constants/task';
+import { changeBoardColor, renameBoard } from '@/store/slices/boardsSlice';
 import {
   addTask,
-  moveTask,
   initializeBoardTasks,
+  moveTask,
   renameTaskStatus,
 } from '@/store/slices/taskSlice';
-import { useEffect, useState } from 'react';
-import { changeBoardColor, renameBoard } from '@/store/slices/boardsSlice';
-import { BoardColumn } from '@/components/BoardColumn/index';
-import { getColorStyles } from '@/utils/getColorStyles';
 import type { ColorKey } from '@/types/colorTypes';
-import { DEFAULT_TASK } from '@/constants/task';
-import { DroppableBoard } from '@/components/DroppableBoard/index';
+import type { BoardName, DropItem } from '@/types/IComponents/IBoard';
+import { type IBoard } from '@/types/IComponents/IBoard';
+import { getColorStyles } from '@/utils/getColorStyles';
+
+import { AddTask, AddTaskButton, BoardItem } from './styled';
 
 const Board = ({ item }: { item: IBoard }) => {
   const { id, name, color } = item;

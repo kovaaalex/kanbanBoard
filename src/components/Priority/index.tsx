@@ -1,7 +1,9 @@
-import type { IPriority, Priorities } from '@/types/IComponents/IPriorities';
-import { PriorityContainer, PriorityItem, PriorityList } from './styled';
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
+
 import { priorityItems } from '@/constants/priorities';
+import type { IPriority, Priorities } from '@/types/IComponents/IPriorities';
+
+import { PriorityContainer, PriorityItem, PriorityList } from './styled';
 
 const Priority = ({ priority = 'Priority', onChange }: IPriority) => {
   const [isOpen, setIsOpen] = useState(false);

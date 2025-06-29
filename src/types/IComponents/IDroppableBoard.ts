@@ -1,4 +1,5 @@
 import type { BoardName } from './IBoard';
+
 export interface DroppableBoardProps {
   status: BoardName;
   children: React.ReactNode;

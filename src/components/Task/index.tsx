@@ -1,13 +1,14 @@
+import { FaTrashAlt } from 'react-icons/fa';
+
+import { useEffect, useRef, useState } from 'react';
+
+import { useAppDispatch } from '@/hooks/hooks';
+
 import Priority from '@/components/Priority/index';
 import { deleteTask, updateTask } from '@/store/slices/taskSlice';
 import type { Priorities } from '@/types/IComponents/IPriorities';
 import type { TaskProps } from '@/types/IComponents/ITask';
 import { isDeadlinePassed } from '@/utils/isDeadlinePassed';
-
-import { useEffect, useRef, useState } from 'react';
-import { FaTrashAlt } from 'react-icons/fa';
-
-import { useAppDispatch } from '@/hooks/hooks';
 
 import {
   DateInput,

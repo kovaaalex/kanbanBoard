@@ -1,5 +1,7 @@
 import { useAppDispatch, useAppSelector } from '@/hooks/hooks';
+
 import { toogleTheme } from '@/store/slices/themeSlice';
+
 import { ThemeBtn } from './styled';
 
 export const ThemeButton = () => {

@@ -1,5 +1,6 @@
 import type { BoardName } from '../IComponents/IBoard';
 import type { Priorities } from '../IComponents/IPriorities';
+
 export interface TaskItem {
   id: number;
   priority: Priorities;

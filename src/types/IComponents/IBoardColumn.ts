@@ -1,4 +1,5 @@
 import type { ColorKey } from '../colorTypes';
+
 export interface BoardColumnProps {
   color: ColorKey;
   currentBoard: string;
