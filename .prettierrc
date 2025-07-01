@@ -6,15 +6,16 @@
   "printWidth": 80,
   "plugins": ["@trivago/prettier-plugin-sort-imports"],
   "importOrder": [
-    "^react$",       
-    "^react/(.*)$",
+    "^react$",
+    "^react-(.*)$",
+    "^react-redux$",
+    "^redux(.*)$",
     "^./hooks",
     "^~/icons",
     "^@/(.*)$",
     "^[./]"
   ],
-  "importOrderSeparation": true,  
-  "importOrderSortSpecifiers": true,  
+  "importOrderSeparation": true,
+  "importOrderSortSpecifiers": true,
   "importOrderCaseInsensitive": true
-
 }

@@ -1,6 +1,6 @@
-import { FaPalette, FaTrashAlt } from 'react-icons/fa';
-
 import { useCallback, useState } from 'react';
+
+import { FaPalette, FaTrashAlt } from 'react-icons/fa';
 
 import { useAppDispatch, useAppSelector } from '@/hooks/hooks';
 
@@ -37,13 +37,10 @@ export const BoardColumn = ({
   );
   const [showColorPicker, setShowColorPicker] = useState(false);
   const columnColor = getColorStyles(color).textColor;
-  const handleColorChange = useCallback(
-    (newColor: ColorKey) => {
-      onChangeColor(newColor);
-      setShowColorPicker(false);
-    },
-    [onChangeColor]
-  );
+  const handleColorChange = (newColor: ColorKey) => {
+    onChangeColor(newColor);
+    setShowColorPicker(false);
+  };
   const handleDelete = useCallback(() => {
     dispatch(dropTaskStatus(currentBoard));
     dispatch(dropBoard(boardId));
