@@ -1,6 +1,6 @@
-import { FaTrashAlt } from 'react-icons/fa';
-
 import { useEffect, useRef, useState } from 'react';
+
+import { FaTrashAlt } from 'react-icons/fa';
 
 import { useAppDispatch } from '@/hooks/hooks';
 

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import { useAppDispatch } from '@/hooks/hooks';
 
@@ -14,7 +14,7 @@ import {
   renameTaskStatus,
 } from '@/store/slices/taskSlice';
 import type { ColorKey } from '@/types/colorTypes';
-import type { BoardName, DropItem } from '@/types/IComponents/IBoard';
+import type { BoardName } from '@/types/IComponents/IBoard';
 import { type IBoard } from '@/types/IComponents/IBoard';
 import { getColorStyles } from '@/utils/getColorStyles';
 
@@ -29,50 +29,53 @@ const Board = ({ item }: { item: IBoard }) => {
   useEffect(() => {
     dispatch(initializeBoardTasks(name));
   }, [name]);
-  const handleDrop = (
-    item: { taskId: number; fromStatus: BoardName },
-    toStatus: BoardName
-  ) => {
-    if (item.fromStatus !== toStatus) {
-      dispatch(
-        moveTask({
-          taskId: item.taskId,
-          fromStatus: item.fromStatus,
-          toStatus: toStatus,
-        })
-      );
-    }
-  };
-  const handleBoardChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setBoard(e.target.value);
-    setShowSave(true);
-  };
-  const handleAddTask = () => {
+  const handleDrop = useCallback(
+    (item: { taskId: number; fromStatus: BoardName }) => {
+      if (item.fromStatus !== name) {
+        dispatch(
+          moveTask({
+            taskId: item.taskId,
+            fromStatus: item.fromStatus,
+            toStatus: name,
+          })
+        );
+      }
+    },
+    [name]
+  );
+  const handleBoardChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setBoard(e.target.value);
+      setShowSave(true);
+    },
+    []
+  );
+  const handleAddTask = useCallback(() => {
     dispatch(
       addTask({
         status: name,
         task: DEFAULT_TASK,
       })
     );
-  };
-  const handleSave = () => {
+  }, [name]);
+  const handleSave = useCallback(() => {
     if (currentBoard.trim() !== name && currentBoard.trim() !== '') {
       const newName = currentBoard.trim() as BoardName;
       dispatch(renameBoard({ oldName: name, newName }));
       dispatch(renameTaskStatus({ oldStatus: name, newStatus: newName }));
       setShowSave(false);
     }
-  };
-  const handleColorChange = (newColor: ColorKey) => {
-    setCurrentColor(newColor);
-    dispatch(changeBoardColor({ boardId: id, newColor }));
-  };
+  }, [currentBoard]);
+  const handleColorChange = useCallback(
+    (newColor: ColorKey) => {
+      setCurrentColor(newColor);
+      dispatch(changeBoardColor({ boardId: id, newColor }));
+    },
+    [id]
+  );
   return (
     <BoardItem>
-      <DroppableBoard
-        status={name}
-        onDrop={(item: DropItem) => handleDrop(item, name)}
-      >
+      <DroppableBoard status={name} onDrop={handleDrop}>
         <BoardColumn
           color={currentColor}
           currentBoard={currentBoard}

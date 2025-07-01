@@ -5,7 +5,7 @@ export const DroppableBoardComponent = styled.div`
   display: flex;
   flex-direction: column;
   gap: 12px;
-  background-color: var(--board-bg);
+  background-color: ${(props) => props.theme.colors.boardBg};
   padding: 12px;
   border-radius: 32px;
 `;

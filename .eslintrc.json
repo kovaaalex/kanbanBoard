@@ -16,9 +16,7 @@
     "sourceType": "module",
     "project": "./tsconfig.json"
   },
-  "plugins": [
-    "simple-import-sort"
-  ],
+  "plugins": ["simple-import-sort"],
   "rules": {
     "semi": ["error", "always"],
     "quotes": ["error", "single"],

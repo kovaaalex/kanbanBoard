@@ -14,5 +14,5 @@ module.exports = {
     ],
   },
   extensionsToTreatAsEsm: ['.ts', '.tsx'],
-  passWithNoTests: true
+  passWithNoTests: true,
 };
